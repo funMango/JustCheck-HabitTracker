@@ -18,56 +18,23 @@ struct ContentView: View {
         TabView {
             TodayView()
                 .tabItem {
-                    Image(systemName: "house")
-                    Text("Today")
+                    Image(systemName: "checklist")
+                    Text(String(localized: "today"))
                 }
             
             Text("Habit")
                 .tabItem {
-                    Image(systemName: "house")
-                    Text("Habit")
+                    Image(systemName: "flame")
+                    Text(String(localized: "habit"))
                 }
             
             Text("Setting")
                 .tabItem {
-                    Image(systemName: "house")
-                    Text("Setting")
+                    Image(systemName: "slider.horizontal.3")
+                    Text(String(localized: "setting"))
                 }
         }
-    }
-}
-
-struct TodayView: View {
-    var body: some View {
-        VStack {
-            HStack {
-                Text("Today")
-                    .font(.title)
-                    .fontWeight(.bold)
-                
-                Spacer()
-                
-                Button {
-                    
-                } label: {
-                    Image(systemName: "plus")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .foregroundStyle(.red)
-                }
-            }
-            .padding()
-            
-            List {
-                ForEach(habits) { habit in
-                    TodayListCellView(habit: habit)
-                }
-            }
-            .listStyle(.plain)
-            
-            
-            Spacer()
-        }
+        .tint(.tabIcon)
     }
 }
 

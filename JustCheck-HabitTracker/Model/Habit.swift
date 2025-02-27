@@ -9,6 +9,7 @@ import Foundation
 
 class Habit: Identifiable {
     var id = UUID().uuidString
+    var createdAt: Date = Date()
     var title: String = ""
     var weekDays: [Days] = []
     var color: String = ""
