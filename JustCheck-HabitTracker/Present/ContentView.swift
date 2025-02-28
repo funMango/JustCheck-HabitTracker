@@ -14,6 +14,8 @@ let habits : [Habit] = [
 ]
 
 struct ContentView: View {
+    @StateObject var vmConatiner = VmContainer()
+    
     var body: some View {
         TabView {
             TodayView()
@@ -34,7 +36,8 @@ struct ContentView: View {
                     Text(String(localized: "setting"))
                 }
         }
-        .tint(.tabIcon)
+        .tint(.blackWhite)
+        .environmentObject(vmConatiner)
     }
 }
 

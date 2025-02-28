@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TodayView: View {
+    @EnvironmentObject var vmContainer: VmContainer
     @State var showAddHabitSheet: Bool = false
     
     var body: some View {
@@ -39,6 +40,7 @@ struct TodayView: View {
                 AddHabitSheet(showAddHabitSheet: $showAddHabitSheet)
             }
         }
+        .environmentObject(vmContainer)
     }
 }
 

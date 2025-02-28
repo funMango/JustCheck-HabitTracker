@@ -38,9 +38,6 @@
     "Habit" : {
 
     },
-    "Habit Title" : {
-
-    },
     "mon" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -58,6 +55,23 @@
         }
       }
     },
+    "newHabit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Habit"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "새로운 습관"
+          }
+        }
+      }
+    },
     "sat" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -71,6 +85,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "토"
+          }
+        }
+      }
+    },
+    "save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "save"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장"
+          }
+        }
+      }
+    },
+    "selectAll" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select All"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전체 선택"
           }
         }
       }
@@ -197,8 +245,27 @@
         }
       }
     },
-    "전체 선택" : {
-
+    "새로운 습관" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Habit"
+          }
+        }
+      }
+    },
+    "저장" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "save"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

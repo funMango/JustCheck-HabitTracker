@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct WeekdaySelectionView: View {
-    @State private var selectedDays: [Bool] = Array(repeating: true, count: 7) // 처음엔 모든 요일 선택
-    @State private var isAllSelected: Bool = true
+    @ObservedObject var viewModel: WeekdaySelectionViewModel
+    @State private var selectedDays: [Bool] = Array(repeating: false, count: 7)
+    @State private var isAllSelected: Bool = false
+    private let weekdays = Days.allCases
     
-    let weekdays = ["월", "화", "수", "목", "금", "토", "일"]
-    
+    init(viewModel: WeekdaySelectionViewModel) {
+        self.viewModel = viewModel
+    }
+            
     var body: some View {
         VStack {
             HStack {
@@ -21,10 +25,11 @@ struct WeekdaySelectionView: View {
                     set: { newValue in
                         isAllSelected = newValue
                         selectedDays = Array(repeating: newValue, count: 7)
+                        viewModel.updateAllWeekdays(from: newValue)
                     }
                 )) {
-                    Text("전체 선택")
-                        .foregroundStyle(isAllSelected ? .tabIcon : .gray)
+                    Text(String(localized: "selectAll"))
+                        .foregroundStyle(isAllSelected ? .blackWhite : .gray)
                 }
                 .toggleStyle(CheckboxToggleStyle())
                                 
@@ -37,11 +42,12 @@ struct WeekdaySelectionView: View {
                     Button(action: {
                         selectedDays[index].toggle()
                         updateAllSelectedStatus()
+                        viewModel.updateWeekdays(from: weekdays[index], status: selectedDays[index])
                     }) {
-                        Text(weekdays[index])
+                        Text(weekdays[index].localized)
                             .frame(width: 40, height: 40)
-                            .background(selectedDays[index] ? .black : Color.gray.opacity(0.3))
-                            .foregroundColor(.white)
+                            .background(selectedDays[index] ? .blackGray : Color.gray.opacity(0.3))
+                            .foregroundColor(selectedDays[index] ? .white : Color.gray.opacity(0.3))
                             .cornerRadius(8)
                     }
                 }
@@ -57,13 +63,13 @@ struct WeekdaySelectionView: View {
 
 // ✅ 커스텀 체크박스 스타일
 struct CheckboxToggleStyle: ToggleStyle {
-    func makeBody(configuration: Configuration) -> some View {
+    func makeBody(configuration: Configuration) -> some View {                
         Button(action: {
             configuration.isOn.toggle()
         }) {
             HStack {
                 Image(systemName: configuration.isOn ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(configuration.isOn ? .black : .gray)
+                    .foregroundColor(configuration.isOn ? .blackWhite : .gray)
                 configuration.label
             }
         }
@@ -73,5 +79,8 @@ struct CheckboxToggleStyle: ToggleStyle {
 
 
 #Preview {
-    WeekdaySelectionView()
+    let vmConatainer = VmContainer()
+    WeekdaySelectionView(
+        viewModel: vmConatainer.getWeekdaySelectionViewModel()
+    )
 }

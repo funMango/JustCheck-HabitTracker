@@ -34,7 +34,6 @@ enum Days: String, CaseIterable, Identifiable{
             return String(localized: "sun")
         }        
     }
-    
-    
+        
     var id: String { self.rawValue }
 }
