@@ -9,10 +9,11 @@ import SwiftUI
 
 struct HabitColorCircle: View {
     var color: String
-    private var size: CGFloat = 15
+    private var size: CGFloat
     
-    init(color: String) {
+    init(color: String, size: CGFloat = 15) {
         self.color = color
+        self.size = size
     }
     
     var body: some View {

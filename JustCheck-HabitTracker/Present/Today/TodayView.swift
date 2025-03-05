@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TodayView: View {
     @EnvironmentObject var vmContainer: VmContainer
     @State var showAddHabitSheet: Bool = false
+    
     
     var body: some View {
         NavigationStack {
@@ -45,5 +47,8 @@ struct TodayView: View {
 }
 
 #Preview {
+    @Previewable @StateObject var vmContainer = VmContainer(modelContainer: DataContainer().getModelContainer())
+    
     TodayView()
+        .environmentObject(vmContainer)
 }

@@ -9,12 +9,16 @@ import SwiftUI
 
 let habits : [Habit] = [
     Habit(title: "Sample1", weekDays: [Days.Mon], color: "#FF6F61"),
-    Habit(title: "Sample2", weekDays: [Days.Mon, Days.Thu], color: "#191970" ),
+    Habit(title: "Sample2", weekDays: [Days.Mon, Days.Thu], color: "#191970"),
     Habit(title: "Sample3", weekDays: [Days.Mon, Days.Fri], color: "#228B22"),
 ]
 
 struct ContentView: View {
-    @StateObject var vmConatiner = VmContainer()
+    @ObservedObject var vmConatiner: VmContainer
+    
+    init(vmContainer: VmContainer) {
+        self.vmConatiner = vmContainer
+    }
     
     var body: some View {
         TabView {
@@ -58,5 +62,11 @@ struct TodayListCellView: View {
 }
 
 #Preview {
-    ContentView()
+    let dataContainer = DataContainer()
+        
+    ContentView(
+        vmContainer: VmContainer(
+            modelContainer: dataContainer.getModelContainer()
+        )
+    )
 }

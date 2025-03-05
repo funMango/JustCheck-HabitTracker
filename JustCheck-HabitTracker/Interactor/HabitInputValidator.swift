@@ -9,16 +9,17 @@ import Foundation
 import Combine
 
 protocol HabitInputValidInteractor {
-    var subject: CurrentValueSubject<Bool, Never> { get }
+    var subject: CurrentValueSubject<Habit?, Never> { get set }
     func setTitle(_ title: String)
     func setWeekdays(_ weekdays: [Days])
+    func setSelectedColor(_ color: HabitColor)
 }
 
-class HabitInputValidator: HabitInputValidInteractor {
-    var isValid = false
-    var subject = CurrentValueSubject<Bool, Never>(false)
+class HabitInputValidator: HabitInputValidInteractor {    
+    var subject = CurrentValueSubject<Habit?, Never>(nil)
     private var title = ""
     private var weekdays: [Days] = []
+    private var selectedColor: HabitColor = .red
     
     func setTitle(_ title: String) {
         self.title = title
@@ -30,20 +31,32 @@ class HabitInputValidator: HabitInputValidInteractor {
         validate()
     }
     
+    func setSelectedColor(_ color: HabitColor) {
+        self.selectedColor = color
+        validate()
+    }
+    
     private func validate() {
         if title.isEmpty {
-            isValid = false
-            subject.send(isValid)
+            subject.send(nil)
             return
         }
         
         if weekdays.isEmpty {
-            isValid = false
-            subject.send(isValid)
+            subject.send(nil)
             return
         }
-                       
-        isValid = true
-        subject.send(isValid)
+        
+        let habit = Habit(
+            title: title,
+            weekDays: weekdays,
+            color: selectedColor.hex
+        )
+        
+        subject.send(habit)
+    }
+    
+    func sendInitializationSignal() {
+        
     }
 }

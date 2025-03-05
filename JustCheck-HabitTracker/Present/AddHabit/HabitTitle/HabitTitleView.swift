@@ -26,11 +26,12 @@ struct HabitTitleView: View {
 }
 
 #Preview {
-    let vmConatainer = VmContainer()
+    let dataContainer = DataContainer()
+    let vmContainer = VmContainer(modelContainer: dataContainer.getModelContainer())
     
     @FocusState var isFocused: Bool
     HabitTitleView(
-        viewModel: vmConatainer.getHabitTitleViewModel(),
+        viewModel: vmContainer.getHabitTitleViewModel(),
         isFocused: $isFocused
     )
 }

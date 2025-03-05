@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import SwiftData
 
-enum Days: String, CaseIterable, Identifiable{
+
+enum Days: String, CaseIterable, Identifiable, Codable{
     case Mon
     case Tue
     case Wed

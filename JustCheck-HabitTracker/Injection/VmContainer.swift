@@ -6,19 +6,35 @@
 //
 
 import Foundation
+import SwiftData
 
 class VmContainer: ObservableObject {
     @Published private(set) var habitTitleViewModel: HabitTitleViewModel
     @Published private(set) var habitSaveButtonViewModel: HabitSaveButtonViewModel
     @Published private(set) var weekdaySelectionViewModel: WeekdaySelectionViewModel
+    @Published private(set) var colorSelectionViewModel: ColorSelectionViewModel
+    
     private let habitInputValidator = HabitInputValidator()
-
-    init() {
-        self.habitTitleViewModel = HabitTitleViewModel(validator: habitInputValidator)
-        self.habitSaveButtonViewModel = HabitSaveButtonViewModel(validator: habitInputValidator)
+    private let habitManager: HabitManager
+    
+    @MainActor
+    init(modelContainer: ModelContainer) {
+        let habitRepository = HabitRepository(modelContainer: modelContainer)
+        self.habitManager = HabitManager(repository: habitRepository)
+        
+        self.habitTitleViewModel = HabitTitleViewModel(validator: habitInputValidator, manager: habitManager)
+        self.habitSaveButtonViewModel = HabitSaveButtonViewModel(
+            validator: habitInputValidator,
+            habitManager: habitManager
+        )
         self.weekdaySelectionViewModel = WeekdaySelectionViewModel(
             validator: habitInputValidator,
-            manager: WeekdayManager()
+            weekdayManager: WeekdayManager(),
+            manager: habitManager
+        )
+        self.colorSelectionViewModel = ColorSelectionViewModel(
+            validator: habitInputValidator,
+            manager: habitManager
         )
     }
     
@@ -33,4 +49,8 @@ class VmContainer: ObservableObject {
     func getWeekdaySelectionViewModel() -> WeekdaySelectionViewModel {
         return weekdaySelectionViewModel
     }
+    
+    func getColorSelectioinViewModel() -> ColorSelectionViewModel {
+        return colorSelectionViewModel
+    }        
 }

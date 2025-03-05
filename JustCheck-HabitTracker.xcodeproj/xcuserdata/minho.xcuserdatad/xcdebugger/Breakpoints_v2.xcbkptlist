@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "D0086F79-1141-4881-9664-4B290D78753A"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "80A018F5-9E50-4B6E-A7CF-A9037BA4F90F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../../../../../var/folders/n5/djbxlxh52psfmshkbcwztxwm0000gn/T/swift-generated-sources/@__swiftmacro_22JustCheck_HabitTracker0029ColorSelectionViewswift_tAFJhfMX51_0_33_E328A875E6CB851C8EC8A486C0A5CDB8Ll7PreviewfMf_.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1"
+            endingLineNumber = "1"
+            landmarkName = "$s22JustCheck_HabitTracker0029ColorSelectionViewswift_tAFJhfMX51_0_33_E328A875E6CB851C8EC8A486C0A5CDB8Ll7PreviewfMf_15PreviewRegistryfMu_"
+            landmarkType = "37">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

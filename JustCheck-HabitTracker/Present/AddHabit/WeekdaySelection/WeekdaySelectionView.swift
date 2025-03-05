@@ -79,8 +79,10 @@ struct CheckboxToggleStyle: ToggleStyle {
 
 
 #Preview {
-    let vmConatainer = VmContainer()
+    let dataContainer = DataContainer()
+    let vmContainer = VmContainer(modelContainer: dataContainer.getModelContainer())
+    
     WeekdaySelectionView(
-        viewModel: vmConatainer.getWeekdaySelectionViewModel()
+        viewModel: vmContainer.getWeekdaySelectionViewModel()
     )
 }

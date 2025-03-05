@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct JustCheck_HabitTrackerApp: App {
+    let dataContainer = DataContainer()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(
+                vmContainer: VmContainer(
+                    modelContainer: dataContainer.getModelContainer()
+                )
+            )
+            .environment(\.modelContext, dataContainer.getModelContainer().mainContext)
         }
     }
 }

@@ -11,7 +11,7 @@ struct AddHabitSheet: View {
     @EnvironmentObject var vmContainer: VmContainer
     @Binding var showAddHabitSheet : Bool
     @FocusState var isFocused: Bool
-    private var downPadding: CGFloat = 30
+    private var downPadding: CGFloat = 15
     private var upPadding: CGFloat = 10
     
     init(showAddHabitSheet: Binding<Bool>) {
@@ -41,6 +41,11 @@ struct AddHabitSheet: View {
                                 
                     Divider()
                         .padding(.bottom, downPadding)
+                                       
+                    ColorSelectionCellView(viewModel: vmContainer.getColorSelectioinViewModel())
+                        .padding(.bottom, downPadding)
+                    
+                    Divider()
                         
                     Spacer()                                                    
                 }
@@ -50,7 +55,10 @@ struct AddHabitSheet: View {
             .padding()
             .toolbar() {
                 ToolbarItem(placement: .topBarTrailing) {
-                    HabitSaveButtonView(viewModel: vmContainer.getHabitSaveButtonViewModel())
+                    HabitSaveButtonView(
+                        viewModel: vmContainer.getHabitSaveButtonViewModel(),
+                        showAddHabitSheet: $showAddHabitSheet
+                    )
                 }
             }
         }
@@ -58,6 +66,11 @@ struct AddHabitSheet: View {
 }
 
 #Preview {
+    @Previewable @StateObject var vmContainer = VmContainer(
+        modelContainer: DataContainer().getModelContainer()
+    )
     @Previewable @State var isPresented = true
-    return AddHabitSheet(showAddHabitSheet: $isPresented)
+    
+    AddHabitSheet(showAddHabitSheet: $isPresented)
+        .environmentObject(vmContainer)
 }

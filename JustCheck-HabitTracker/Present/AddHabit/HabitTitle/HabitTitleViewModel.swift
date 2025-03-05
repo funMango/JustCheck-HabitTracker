@@ -8,14 +8,20 @@
 import Foundation
 import Combine
 
-class HabitTitleViewModel: ObservableObject {
+class HabitTitleViewModel: ObservableObject, HabitInputProtocol {
     @Published var title = ""
+    var manager: HabitManageInteractor
+    var cancellables = Set<AnyCancellable>()
     private var validator: HabitInputValidInteractor
-    private var cancellables = Set<AnyCancellable>()
-    
-    init(validator: HabitInputValidInteractor) {
+        
+    init(validator: HabitInputValidInteractor,
+         manager: HabitManageInteractor
+    ) {
         self.validator = validator
+        self.manager = manager
+        
         checkTitleValidity()
+        titleReset()
     }
     
     private func checkTitleValidity() {
@@ -24,5 +30,11 @@ class HabitTitleViewModel: ObservableObject {
                 self?.validator.setTitle(newTitle)
             }
             .store(in: &cancellables)
-    }    
+    }
+    
+    private func titleReset() {
+        reset {
+            self.title = ""
+        }
+    }
 }

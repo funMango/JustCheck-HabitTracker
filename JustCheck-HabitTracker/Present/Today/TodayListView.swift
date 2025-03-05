@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TodayListView: View {
+    @Query var habits: [Habit]
+    
     var body: some View {
         List {
             ForEach(habits) { habit in
