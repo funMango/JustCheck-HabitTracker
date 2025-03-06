@@ -11,14 +11,14 @@ import Combine
 protocol HabitInputValidInteractor {
     var subject: CurrentValueSubject<Habit?, Never> { get set }
     func setTitle(_ title: String)
-    func setWeekdays(_ weekdays: [Days])
+    func setWeekdays(_ weekdays: [Weekday])
     func setSelectedColor(_ color: HabitColor)
 }
 
 class HabitInputValidator: HabitInputValidInteractor {    
     var subject = CurrentValueSubject<Habit?, Never>(nil)
     private var title = ""
-    private var weekdays: [Days] = []
+    private var weekdays: [Weekday] = []
     private var selectedColor: HabitColor = .red
     
     func setTitle(_ title: String) {
@@ -26,7 +26,7 @@ class HabitInputValidator: HabitInputValidInteractor {
         validate()
     }
     
-    func setWeekdays(_ weekdays: [Days]) {
+    func setWeekdays(_ weekdays: [Weekday]) {
         self.weekdays = weekdays
         validate()
     }

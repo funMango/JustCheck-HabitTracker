@@ -11,6 +11,7 @@ import Combine
 protocol HabitManageInteractor {
     var subject: CurrentValueSubject<Bool, Never> { get }
     func save(_ habit: Habit) async throws
+    func delete(_ habit: Habit) async throws
 }
 
 class HabitManager: HabitManageInteractor {
@@ -25,6 +26,14 @@ class HabitManager: HabitManageInteractor {
         do {
             try await repository.save(habit)
             subject.send(true)
+        } catch {
+            throw error
+        }
+    }
+    
+    func delete(_ habit: Habit) async throws {
+        do {
+            try await repository.delete(habit)
         } catch {
             throw error
         }

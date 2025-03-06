@@ -9,26 +9,26 @@ import SwiftUI
 import Combine
 
 class WeekdaySelectionViewModel: ObservableObject, HabitInputProtocol {
-    @Published var selectedWeekdays: [Days] = []
+    @Published var selectedWeekdays: [Weekday] = []
     var manager: HabitManageInteractor
     var cancellables = Set<AnyCancellable>()
-    private var weekdayManager: WeekdayManageInteractor
+    private var weekdaysManager: WeekdaysManageInteractor
     private var validator: HabitInputValidInteractor
                 
     init(validator: HabitInputValidator,
-         weekdayManager: WeekdayManageInteractor,
+         weekdaysManager: WeekdaysManageInteractor,
          manager: HabitManageInteractor
     ) {
         self.validator = validator
-        self.weekdayManager = weekdayManager
+        self.weekdaysManager = weekdaysManager
         self.manager = manager
                 
         checkWeekdayValidity()
         weekdaysReset()
     }
     
-    func updateWeekdays(from weekday: Days, status: Bool) {
-        self.selectedWeekdays = weekdayManager.updateWeekdays(
+    func updateWeekdays(from weekday: Weekday, status: Bool) {
+        self.selectedWeekdays = weekdaysManager.updateWeekdays(
             from: self.selectedWeekdays,
             target: weekday,
             status: status
@@ -36,7 +36,7 @@ class WeekdaySelectionViewModel: ObservableObject, HabitInputProtocol {
     }
     
     func updateAllWeekdays(from isAllSelected: Bool) {
-        self.selectedWeekdays = weekdayManager.updateAllWeekDays(from: isAllSelected)
+        self.selectedWeekdays = weekdaysManager.updateAllWeekDays(from: isAllSelected)
     }
             
     private func checkWeekdayValidity() {

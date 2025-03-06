@@ -8,9 +8,9 @@
 import SwiftUI
 
 let habits : [Habit] = [
-    Habit(title: "Sample1", weekDays: [Days.Mon], color: "#FF6F61"),
-    Habit(title: "Sample2", weekDays: [Days.Mon, Days.Thu], color: "#191970"),
-    Habit(title: "Sample3", weekDays: [Days.Mon, Days.Fri], color: "#228B22"),
+    Habit(title: "Sample1", weekDays: [Weekday.Mon], color: "#FF6F61"),
+    Habit(title: "Sample2", weekDays: [Weekday.Mon, Weekday.Thu], color: "#191970"),
+    Habit(title: "Sample3", weekDays: [Weekday.Mon, Weekday.Fri], color: "#228B22"),
 ]
 
 struct ContentView: View {
@@ -28,7 +28,7 @@ struct ContentView: View {
                     Text(String(localized: "today"))
                 }
             
-            Text("Habit")
+            HabitsView()
                 .tabItem {
                     Image(systemName: "flame")
                     Text(String(localized: "habit"))
@@ -45,21 +45,7 @@ struct ContentView: View {
     }
 }
 
-struct TodayListCellView: View {
-    var habit: Habit
-    
-    var body: some View {
-        HStack {
-            HabitColorCircle(color: habit.color)
-            
-            Text(habit.title)                
-            
-            Spacer()
-            
-            CircularCheckbox(color: habit.color)
-        }
-    }
-}
+
 
 #Preview {
     let dataContainer = DataContainer()

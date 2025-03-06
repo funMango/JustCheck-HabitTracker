@@ -12,6 +12,7 @@ import Combine
 protocol HabitRepositoryProtocol {
     var event: PassthroughSubject<Void, Never> { get }
     func save(_ habit: Habit) async throws
+    func delete(_ habit: Habit) async throws
 }
 
 
@@ -46,4 +47,26 @@ class HabitRepository: HabitRepositoryProtocol {
             print("⚠️ [Error] Habit 저장실패: \(error)")
         }
     }
+    
+    func delete(_ habit: Habit) async throws {
+            modelContext.delete(habit)
+            
+            do {
+                try await withCheckedThrowingContinuation { continuation in
+                    Task {
+                        do {
+                            try self.modelContext.save()
+                            print("🗑️ Habit 삭제완료")
+                            event.send()
+                            continuation.resume()
+                        } catch {
+                            print("⚠️ [Error] Habit 삭제실패: \(error)")
+                            continuation.resume(throwing: error)
+                        }
+                    }
+                }
+            } catch {
+                print("⚠️ [Error] Habit 삭제실패: \(error)")
+            }
+        }
 }

@@ -8,16 +8,15 @@
 import SwiftUI
 import SwiftData
 
-struct TodayView: View {
+struct HabitsView: View {
     @EnvironmentObject var vmContainer: VmContainer
     @State var showAddHabitSheet: Bool = false
-    
     
     var body: some View {
         NavigationStack {
             VStack {
                 HStack {
-                    Text(String(localized: "today"))
+                    Text(String(localized: "habit"))
                         .font(.title)
                         .fontWeight(.bold)
                     
@@ -34,7 +33,7 @@ struct TodayView: View {
                 }
                 .padding()
                 
-                TodayListView()
+                HabitListView(viewModel: vmContainer.getHabitListViewModel())
                             
                 Spacer()
             }
@@ -49,6 +48,6 @@ struct TodayView: View {
 #Preview {
     @Previewable @StateObject var vmContainer = VmContainer(modelContainer: DataContainer().getModelContainer())
     
-    TodayView()
+    HabitsView()
         .environmentObject(vmContainer)
 }

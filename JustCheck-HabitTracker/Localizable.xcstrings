@@ -35,6 +35,16 @@
         }
       }
     },
+    "Delete" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "삭제"
+          }
+        }
+      }
+    },
     "fri" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -48,6 +58,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "금"
+          }
+        }
+      }
+    },
+    "Fri" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Friday"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "금요일"
           }
         }
       }
@@ -86,9 +113,6 @@
         }
       }
     },
-    "Habit" : {
-
-    },
     "mon" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -102,6 +126,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "월"
+          }
+        }
+      }
+    },
+    "Mon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monday"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "월요일"
           }
         }
       }
@@ -191,6 +232,23 @@
         }
       }
     },
+    "Sat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saturday"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "토요일"
+          }
+        }
+      }
+    },
     "save" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -243,7 +301,14 @@
       }
     },
     "Setting" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정"
+          }
+        }
+      }
     },
     "sun" : {
       "extractionState" : "manual",
@@ -262,6 +327,23 @@
         }
       }
     },
+    "Sun" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunday"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일요일"
+          }
+        }
+      }
+    },
     "thu" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -275,6 +357,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "목"
+          }
+        }
+      }
+    },
+    "Thu" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thursday"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "목요일"
           }
         }
       }
@@ -330,6 +429,23 @@
         }
       }
     },
+    "Tue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tuesday"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "화요일"
+          }
+        }
+      }
+    },
     "wed" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -343,6 +459,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "수"
+          }
+        }
+      }
+    },
+    "Wed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wednesday"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수요일"
           }
         }
       }

@@ -11,7 +11,7 @@ struct WeekdaySelectionView: View {
     @ObservedObject var viewModel: WeekdaySelectionViewModel
     @State private var selectedDays: [Bool] = Array(repeating: false, count: 7)
     @State private var isAllSelected: Bool = false
-    private let weekdays = Days.allCases
+    private let weekdays = Weekday.allCases
     
     init(viewModel: WeekdaySelectionViewModel) {
         self.viewModel = viewModel

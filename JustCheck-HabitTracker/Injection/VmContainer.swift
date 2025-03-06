@@ -13,7 +13,10 @@ class VmContainer: ObservableObject {
     @Published private(set) var habitSaveButtonViewModel: HabitSaveButtonViewModel
     @Published private(set) var weekdaySelectionViewModel: WeekdaySelectionViewModel
     @Published private(set) var colorSelectionViewModel: ColorSelectionViewModel
-    
+    @Published private(set) var habitListViewModel: HabitListViewModel
+    @Published private(set) var todayListViewModel: TodayListViewModel
+    @Published private(set) var todayTitleViewModel: TodayTitleViewModel
+        
     private let habitInputValidator = HabitInputValidator()
     private let habitManager: HabitManager
     
@@ -22,19 +25,38 @@ class VmContainer: ObservableObject {
         let habitRepository = HabitRepository(modelContainer: modelContainer)
         self.habitManager = HabitManager(repository: habitRepository)
         
-        self.habitTitleViewModel = HabitTitleViewModel(validator: habitInputValidator, manager: habitManager)
+        self.habitTitleViewModel = HabitTitleViewModel(
+            validator: habitInputValidator,
+            manager: habitManager
+        )
+        
         self.habitSaveButtonViewModel = HabitSaveButtonViewModel(
             validator: habitInputValidator,
             habitManager: habitManager
         )
+        
         self.weekdaySelectionViewModel = WeekdaySelectionViewModel(
             validator: habitInputValidator,
-            weekdayManager: WeekdayManager(),
+            weekdaysManager: WeekdaysManager(),
             manager: habitManager
         )
+        
         self.colorSelectionViewModel = ColorSelectionViewModel(
             validator: habitInputValidator,
             manager: habitManager
+        )
+        
+        self.habitListViewModel = HabitListViewModel(
+            manager: habitManager
+        )
+        
+        self.todayListViewModel = TodayListViewModel(
+            weekdayManager: WeekdayManager(),
+            habitFilter: HabitFilter()
+        )
+        
+        self.todayTitleViewModel = TodayTitleViewModel(
+            weekdayManager: WeekdayManager()
         )
     }
     
@@ -52,5 +74,18 @@ class VmContainer: ObservableObject {
     
     func getColorSelectioinViewModel() -> ColorSelectionViewModel {
         return colorSelectionViewModel
-    }        
+    }
+    
+    func getHabitListViewModel() -> HabitListViewModel {
+        return habitListViewModel
+    }
+    
+    func getTodayListViewModel() -> TodayListViewModel {
+        return todayListViewModel
+    }
+    
+    func getTodayTitleViewModel() -> TodayTitleViewModel {
+        return todayTitleViewModel
+    }
+    
 }

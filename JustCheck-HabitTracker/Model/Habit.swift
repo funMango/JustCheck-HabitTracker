@@ -18,19 +18,22 @@ class Habit: Identifiable {
     var id = UUID().uuidString
     var createdAt: Date = Date()
     var title: String = ""
-    var weekDays: [Days] = []
+    var weekDays: [Weekday] = []
+    var checkDays: [Date] = []
     var color: String = ""
     var memo: String = ""
     var type: HabitType = HabitType.normal
     
     init(title: String,
-         weekDays: [Days] = [],
+         weekDays: [Weekday] = [],
+         checkDays: [Date] = [],
          color: String = HabitColor.orange.hex,
          memo: String = "",
          type: HabitType = .normal
     ) {
         self.title = title
         self.weekDays = weekDays
+        self.checkDays = checkDays
         self.color = color
         self.memo = memo
         self.type = type
