@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CircularCheckbox: View {
-    @State private var isChecked: Bool = false
     @ObservedObject private var viewModel: CircularCheckboxViewModel
+    @State private var isChecked = false
     private var habit: Habit
     private var defaultSize: CGFloat = 20
     private var smallSize: CGFloat = 15
@@ -22,7 +22,7 @@ struct CircularCheckbox: View {
     var body: some View {
         Button(action: {
             isChecked.toggle()
-            viewModel.check(habit)
+            viewModel.check(habit, isChecked: isChecked)
         }) {
             ZStack {
                 // 바깥 원: 체크되지 않았을 때 테두리만 회색, 체크되었을 때 테두리가 빨간색
