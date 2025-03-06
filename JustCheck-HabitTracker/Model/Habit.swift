@@ -38,4 +38,8 @@ class Habit: Identifiable {
         self.memo = memo
         self.type = type
     }
+    
+    func addChecDay(_ date: Date) {
+        self.checkDays.append(date.startOfDay())
+    }
 }

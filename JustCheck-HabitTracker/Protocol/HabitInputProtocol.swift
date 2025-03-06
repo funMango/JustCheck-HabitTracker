@@ -15,7 +15,7 @@ protocol HabitInputProtocol: AnyObject {
 
 extension HabitInputProtocol {
     func reset(resetAll: @escaping () -> Void) {
-        manager.subject
+        manager.saveSubject
             .receive(on: RunLoop.main)
             .sink { result in
                 resetAll()

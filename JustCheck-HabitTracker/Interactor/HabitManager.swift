@@ -9,13 +9,17 @@ import Foundation
 import Combine
 
 protocol HabitManageInteractor {
-    var subject: CurrentValueSubject<Bool, Never> { get }
+    var saveSubject: CurrentValueSubject<Bool, Never> { get }
+    var updateSubject: CurrentValueSubject<[Habit], Never> { get }
     func save(_ habit: Habit) async throws
     func delete(_ habit: Habit) async throws
+    func update(_ habit: Habit) async throws
 }
 
 class HabitManager: HabitManageInteractor {
-    var subject = CurrentValueSubject<Bool, Never> (false)
+    var saveSubject = CurrentValueSubject<Bool, Never> (false)
+    var updateSubject = CurrentValueSubject<[Habit], Never> ([])
+    
     private var repository: HabitRepositoryProtocol
         
     init(repository: HabitRepositoryProtocol) {
@@ -25,7 +29,7 @@ class HabitManager: HabitManageInteractor {
     func save(_ habit: Habit) async throws {        
         do {
             try await repository.save(habit)
-            subject.send(true)
+            saveSubject.send(true)
         } catch {
             throw error
         }
@@ -34,6 +38,16 @@ class HabitManager: HabitManageInteractor {
     func delete(_ habit: Habit) async throws {
         do {
             try await repository.delete(habit)
+        } catch {
+            throw error
+        }
+    }
+    
+    func update(_ habit: Habit) async throws {
+        do {
+            try await repository.save(habit)
+            let habits = try repository.fetch()
+            updateSubject.send(habits)
         } catch {
             throw error
         }

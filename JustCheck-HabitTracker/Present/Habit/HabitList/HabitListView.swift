@@ -24,9 +24,8 @@ struct HabitListView: View {
                         }
                         .tint(.red)
                     }
-                    .animation(.easeInOut(duration: 0.5), value: habit)
             }
-        }
+        }        
         .listStyle(.plain)
         .onAppear() {
             viewModel.fetchHabits(habits)
@@ -34,6 +33,7 @@ struct HabitListView: View {
         .onChange(of: habits) { oldHabits, newHabits in
             viewModel.fetchHabits(newHabits)
         }
+        .animation(.easeInOut(duration: 0.5), value: viewModel.habits)
     }
 }
 

@@ -10,63 +10,65 @@ import SwiftData
 import Combine
 
 protocol HabitRepositoryProtocol {
-    var event: PassthroughSubject<Void, Never> { get }
     func save(_ habit: Habit) async throws
     func delete(_ habit: Habit) async throws
+    func update(_ habit: Habit) async throws
+    func fetch() throws -> [Habit]
 }
 
-
 class HabitRepository: HabitRepositoryProtocol {
-    var event = PassthroughSubject<Void, Never>()
     private let modelContainer: ModelContainer
     private let modelContext: ModelContext
         
     @MainActor
-    init(modelContainer: ModelContainer){
+    init(modelContainer: ModelContainer) {
         self.modelContainer = modelContainer
         self.modelContext = modelContainer.mainContext
     }
     
     func save(_ habit: Habit) async throws {
         modelContext.insert(habit)
-        
-        do {
-            try await withCheckedThrowingContinuation { continuation in
-                Task {
-                    do {
-                        try self.modelContext.save()
-                        print("💾 Habit 저장완료")
-                        continuation.resume()
-                    } catch {
-                        print("⚠️ [Error] Habit 저장실패: \(error)")
-                        continuation.resume(throwing: error)
-                    }
-                }
-            }
-        } catch {
-            print("⚠️ [Error] Habit 저장실패: \(error)")
-        }
+        try await saveContext()
     }
     
     func delete(_ habit: Habit) async throws {
-            modelContext.delete(habit)
-            
-            do {
-                try await withCheckedThrowingContinuation { continuation in
-                    Task {
-                        do {
-                            try self.modelContext.save()
-                            print("🗑️ Habit 삭제완료")
-                            event.send()
-                            continuation.resume()
-                        } catch {
-                            print("⚠️ [Error] Habit 삭제실패: \(error)")
-                            continuation.resume(throwing: error)
-                        }
-                    }
+        modelContext.delete(habit)
+        try await saveContext()
+    }
+    
+    func update(_ habit: Habit) async throws {
+        do {
+            try await saveContext()
+            print("🔄 Habit 업데이트 완료")
+        } catch {
+            print("⚠️ [Error] Habit 업데이트 실패: \(error)")
+            throw error
+        }
+    }
+    
+    func fetch() throws -> [Habit]{
+        do {
+            let fetchRequest = FetchDescriptor<Habit>()
+            let habits: [Habit] = try modelContext.fetch(fetchRequest)
+            print("🔄 Habit 데이터 로딩 완료")
+                        
+            return habits
+        } catch {
+            print("⚠️ [Error] Habit 데이터 로딩 실패: \(error)")
+            throw error
+        }
+    }
+    
+    private func saveContext() async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            Task {
+                do {
+                    try self.modelContext.save()
+                    continuation.resume()
+                } catch {
+                    continuation.resume(throwing: error)
                 }
-            } catch {
-                print("⚠️ [Error] Habit 삭제실패: \(error)")
             }
         }
+    }
 }
