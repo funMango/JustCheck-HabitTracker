@@ -13,9 +13,7 @@ protocol HabitFilterInteractor {
 
 class HabitFilter: HabitFilterInteractor {    
     func filter(habits: [Habit], weekday: Weekday, date: Date) -> [Habit] {
-        let filteredByWeekday = filterByWeekday(habits: habits, by: weekday)
-        let filterdByDate = filterByDate(habits: filteredByWeekday, by: date)
-        return filterdByDate
+        return filterByWeekday(habits: habits, by: weekday)        
     }
         
     private func filterByWeekday(habits: [Habit], by weekday: Weekday) -> [Habit] {

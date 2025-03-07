@@ -39,7 +39,12 @@ class Habit: Identifiable {
         self.type = type
     }
     
-    func addChecDay(_ date: Date) {
+    func addCheckDay(_ date: Date) {
         self.checkDays.append(date.startOfDay())
+    }
+    
+    @MainActor
+    func removeCheckDay(_ date: Date) {
+        self.checkDays.removeAll { $0 == date.startOfDay() }
     }
 }

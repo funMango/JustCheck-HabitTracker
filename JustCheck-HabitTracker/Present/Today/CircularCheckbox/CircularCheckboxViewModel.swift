@@ -16,24 +16,23 @@ class CircularCheckboxViewModel: ObservableObject {
     }
             
     func check(_ habit: Habit, isChecked: Bool) {
-        currentTask?.cancel()
-                    
-        currentTask = DispatchWorkItem { [weak self] in
-            guard let self = self else { return }
-            
-            if isChecked {
-                self.addCheckDay(to: habit)
-            }
-        }
-                    
-        if let task = currentTask {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: task)
+        if isChecked {
+            self.addCheckDay(to: habit)
+        } else {
+            self.removeCheckDay(from: habit)
         }
     }
     
     private func addCheckDay(to habit: Habit) {
         Task {
-            habit.addChecDay(Date())
+            habit.addCheckDay(Date())
+            try await habitManager.update(habit)
+        }
+    }
+    
+    private func removeCheckDay(from habit: Habit) {
+        Task {
+            await habit.removeCheckDay(Date())
             try await habitManager.update(habit)
         }
     }
