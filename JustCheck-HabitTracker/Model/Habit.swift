@@ -20,14 +20,14 @@ class Habit: Identifiable {
     var title: String = ""
     var weekDays: [Weekday] = []
     var checkDays: [Date] = []
-    var color: String = ""
+    var color: HabitColor = HabitColor.orange
     var memo: String = ""
     var type: HabitType = HabitType.normal
     
     init(title: String,
          weekDays: [Weekday] = [],
          checkDays: [Date] = [],
-         color: String = HabitColor.orange.hex,
+         color: HabitColor = .orange,
          memo: String = "",
          type: HabitType = .normal
     ) {
@@ -41,6 +41,11 @@ class Habit: Identifiable {
     
     func addCheckDay(_ date: Date) {
         self.checkDays.append(date.startOfDay())
+    }
+    
+    func getselectedWeekDays() -> [Bool] {
+        let allDays: [Weekday] = [.Mon, .Tue, .Wed, .Thu, .Fri, .Sat, .Sun]
+        return allDays.map { weekDays.contains($0) }        
     }
     
     @MainActor

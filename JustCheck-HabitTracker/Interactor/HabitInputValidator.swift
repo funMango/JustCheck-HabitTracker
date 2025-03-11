@@ -50,13 +50,9 @@ class HabitInputValidator: HabitInputValidInteractor {
         let habit = Habit(
             title: title,
             weekDays: weekdays,
-            color: selectedColor.hex
+            color: selectedColor
         )
         
         subject.send(habit)
-    }
-    
-    func sendInitializationSignal() {
-        
     }
 }

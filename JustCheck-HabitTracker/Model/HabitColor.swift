@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum HabitColor: String, CaseIterable, Identifiable {
+enum HabitColor: String, CaseIterable, Identifiable, Codable {
     var id: String { self.rawValue }
     
     case red
@@ -49,5 +49,5 @@ enum HabitColor: String, CaseIterable, Identifiable {
         case .purple:
             return "#8183f7"
         }
-    }
+    }        
 }

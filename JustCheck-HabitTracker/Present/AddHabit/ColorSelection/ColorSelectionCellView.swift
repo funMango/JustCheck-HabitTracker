@@ -15,28 +15,41 @@ struct ColorSelectionCellView: View {
             ColorSelectionView(viewModel: viewModel)
         } label: {
             VStack {
-                HStack {
-                    Text(String(localized: "color"))
-                        .font(.caption)
-                        .foregroundStyle(.gray)
-                    
-                    Spacer()
-                }
-                .padding(.bottom, 5)
+                CaptionText(text: String(localized: "color"))
+                    .padding(.bottom, 5)
                 
                 HStack {
-                    HabitColorCircle(color: viewModel.selectedColor.hex, size: 10)
-                    
-                    Text(viewModel.selectedColor.localized)
-                        .foregroundStyle(.blackWhite)
-                    
-                    Spacer()
-                    
+                    ColorDetailView(
+                        colorName: viewModel.selectedColor.localized,
+                        colorHex: viewModel.selectedColor.hex,
+                        size: 10
+                    )
+                                                            
                     Image(systemName: "chevron.right")
                         .foregroundStyle(.gray)
                     
                 }
             }
+        }
+    }
+}
+
+struct ColorDetailView: View {
+    var colorName: String
+    var colorHex: String
+    var size: CGFloat
+        
+    var body: some View {
+        HStack {
+            HabitColorCircle(
+                color: colorHex,
+                size: size
+            )
+            
+            Text(colorName)
+                .foregroundStyle(.blackWhite)
+            
+            Spacer()
         }
     }
 }

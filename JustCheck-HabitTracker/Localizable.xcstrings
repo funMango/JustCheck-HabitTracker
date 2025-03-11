@@ -1,6 +1,22 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "%@년 %@월" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@년 %2$@월"
+          }
+        }
+      }
+    },
+    "%lld" : {
+
+    },
     "blue" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -41,6 +57,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "삭제"
+          }
+        }
+      }
+    },
+    "edit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "편집"
           }
         }
       }
@@ -109,6 +142,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "습관"
+          }
+        }
+      }
+    },
+    "habitDetail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habit Detail"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "습관 세부사항"
           }
         }
       }

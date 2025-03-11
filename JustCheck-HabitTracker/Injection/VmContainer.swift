@@ -16,7 +16,7 @@ class VmContainer: ObservableObject {
     @Published private(set) var habitListViewModel: HabitListViewModel
     @Published private(set) var todayListViewModel: TodayListViewModel
     @Published private(set) var todayTitleViewModel: TodayTitleViewModel
-    @Published private(set) var circularCheckboxViewModel: CircularCheckboxViewModel
+    @Published private(set) var circularCheckboxViewModel: CircularCheckboxViewModel    
         
     private let habitInputValidator = HabitInputValidator()
     private let habitManager: HabitManager

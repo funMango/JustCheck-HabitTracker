@@ -39,7 +39,7 @@ struct TodayListCellView: View {
     
     var body: some View {
         HStack {
-            HabitColorCircle(color: habit.color)
+            HabitColorCircle(color: habit.color.hex)
             
             Text(habit.title)
             

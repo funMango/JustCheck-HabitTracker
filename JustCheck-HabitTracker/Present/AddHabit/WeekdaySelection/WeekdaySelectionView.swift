@@ -44,11 +44,10 @@ struct WeekdaySelectionView: View {
                         updateAllSelectedStatus()
                         viewModel.updateWeekdays(from: weekdays[index], status: selectedDays[index])
                     }) {
-                        Text(weekdays[index].localized)
-                            .frame(width: 40, height: 40)
-                            .background(selectedDays[index] ? .blackGray : Color.gray.opacity(0.3))
-                            .foregroundColor(selectedDays[index] ? .white : Color.gray.opacity(0.3))
-                            .cornerRadius(8)
+                        WeekdayButton(
+                            selectedDay: $selectedDays[index],
+                            weekday: weekdays[index].localized
+                        )                        
                     }
                 }
             }

@@ -15,15 +15,17 @@ struct HabitListView: View {
     var body: some View {
         List {
             ForEach(viewModel.habits) { habit in
-                HabitListCellView(habit: habit)
-                    .swipeActions {
-                        Button(role: .destructive) {
-                            viewModel.deleteHabit(habit)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                        .tint(.red)
+                NavigationLink(destination: HabitDetailView(habit: habit)) {
+                    HabitListCellView(habit: habit)
+                }
+                .swipeActions {
+                    Button(role: .destructive) {
+                        viewModel.deleteHabit(habit)
+                    } label: {
+                        Label("Delete", systemImage: "trash")
                     }
+                    .tint(.red)
+                }
             }
         }        
         .listStyle(.plain)
@@ -32,8 +34,7 @@ struct HabitListView: View {
         }
         .onChange(of: habits) { oldHabits, newHabits in
             viewModel.fetchHabits(newHabits)
-        }
-        .animation(.easeInOut(duration: 0.5), value: viewModel.habits)
+        }        
     }
 }
 

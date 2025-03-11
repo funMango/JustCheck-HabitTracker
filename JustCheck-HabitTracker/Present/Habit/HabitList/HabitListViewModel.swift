@@ -13,6 +13,7 @@ class HabitListViewModel: ObservableObject {
     private var manager: HabitManageInteractor
     
     init(habits: [Habit] = [], manager: HabitManageInteractor) {
+        self.habits = habits
         self.manager = manager
     }
     

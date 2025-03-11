@@ -27,13 +27,13 @@ struct CircularCheckbox: View {
             ZStack {
                 // 바깥 원: 체크되지 않았을 때 테두리만 회색, 체크되었을 때 테두리가 빨간색
                 Circle()
-                    .stroke(isChecked ? Color(hex: habit.color) : Color.gray, lineWidth: 1)  // 체크된 상태에 따라 테두리 색상 변경
+                    .stroke(isChecked ? Color(hex: habit.color.hex) : Color.gray, lineWidth: 1)  // 체크된 상태에 따라 테두리 색상 변경
                     .frame(width: defaultSize, height: defaultSize)
                 
                 // 안쪽 원: 체크되었을 때 빨간색
                 if isChecked {
                     Circle()
-                        .fill(Color(hex: habit.color))
+                        .fill(Color(hex: habit.color.hex))
                         .frame(width: smallSize, height: smallSize)
                 }
             }
@@ -45,7 +45,7 @@ struct CircularCheckbox: View {
 #Preview {
     let dataContainer = DataContainer()
     let vmContainer = VmContainer(modelContainer: dataContainer.getModelContainer())
-    let habit = Habit(title: "test", color: "#228B22")
+    let habit = Habit(title: "test", color: .orange)
     
     CircularCheckbox(
         viewModel: vmContainer.getCheckboxViewModel(),
