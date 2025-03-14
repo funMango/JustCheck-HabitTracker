@@ -16,8 +16,7 @@ class VmContainer: ObservableObject {
     @Published private(set) var habitListViewModel: HabitListViewModel
     @Published private(set) var todayListViewModel: TodayListViewModel
     @Published private(set) var todayTitleViewModel: TodayTitleViewModel
-    @Published private(set) var circularCheckboxViewModel: CircularCheckboxViewModel    
-        
+                
     private let habitInputValidator = HabitInputValidator()
     private let habitManager: HabitManager
     
@@ -60,10 +59,6 @@ class VmContainer: ObservableObject {
         self.todayTitleViewModel = TodayTitleViewModel(
             weekdayManager: WeekdayManager()
         )
-        
-        self.circularCheckboxViewModel = CircularCheckboxViewModel(
-            habitManager: habitManager
-        )
     }
     
     func getHabitTitleViewModel() -> HabitTitleViewModel {
@@ -94,7 +89,7 @@ class VmContainer: ObservableObject {
         return todayTitleViewModel
     }
     
-    func getCheckboxViewModel() -> CircularCheckboxViewModel {
-        return circularCheckboxViewModel
-    }    
+    func getCheckboxViewModel(habit: Habit) -> CircularCheckboxViewModel {
+        return CircularCheckboxViewModel(habitManager: self.habitManager, habit: habit)
+    }
 }

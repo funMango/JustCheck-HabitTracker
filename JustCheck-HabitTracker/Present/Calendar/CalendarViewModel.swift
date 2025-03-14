@@ -22,11 +22,17 @@ class CalendarViewModel: ObservableObject {
         )
     }
     
-    func setSelectedDate(_ date: Date) {
+    func changeMonth(by value: Int) {
+        if let newDate = Calendar.current.date(byAdding: .month, value: value, to: selectedDate) {
+            setSelectedDate(newDate)
+        }
+    }
+    
+    private func setSelectedDate(_ date: Date) {
         self.selectedDate = date
         self.checkDaysCount = filter.filterCheckDaysCount(
             selectdDate: self.selectedDate,
             checkDays: self.habit.checkDays
         )
-    }
+    }    
 }

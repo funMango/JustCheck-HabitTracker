@@ -13,21 +13,6 @@ struct ColorSelectionView: View {
     
     var body: some View {
         VStack {
-            HStack{
-                Button {
-                    dismiss()
-                } label: {
-                    BackButton()
-                }
-                Spacer()
-                
-                Text(String(localized: "color"))
-                    .font(.headline)
-                
-                Spacer()
-            }
-            .padding()
-                            
             List(HabitColor.allCases) { color in
                 Button {
                     viewModel.setSelectedColor(color)
@@ -49,10 +34,22 @@ struct ColorSelectionView: View {
                     }
                 }
                 .padding(.vertical, 5)
+                .listRowSeparator(.hidden)
             }
         }
-        .listStyle(.plain)
+        .listStyle(.inset)        
         .navigationBarBackButtonHidden(true)
+        .navigationTitle(String(localized: "color"))
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundStyle(.blackWhite)
+                }
+            }
+        }
     }
 }
 

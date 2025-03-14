@@ -12,7 +12,7 @@ struct HabitListCellView: View {
     
     var body: some View {
         HStack {
-            HabitColorCircle(color: habit.color.hex)
+            HabitColorCircle(color: habit.color.hex, size: 10)
             
             Text(habit.title)
             

@@ -16,17 +16,17 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            HabitsView()
-                .tabItem {
-                    Image(systemName: "flame")
-                    Text(String(localized: "habit"))
-                }
-            
             TodayView()
                 .tabItem {
                     Image(systemName: "checklist")
                     Text(String(localized: "today"))
                 }
+            
+            HabitsView()
+                .tabItem {
+                    Image(systemName: "flame")
+                    Text(String(localized: "habit"))
+                }            
                                     
             Text("Setting")
                 .tabItem {

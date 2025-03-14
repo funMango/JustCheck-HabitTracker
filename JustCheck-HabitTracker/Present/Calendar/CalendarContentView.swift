@@ -14,23 +14,27 @@ struct CalendarContentView: View {
     var body: some View {
         VStack {
             HStack {
-                Button(action: { changeMonth(by: -1) }) {
-                    Image(systemName: "chevron.left")
-                        .foregroundStyle(.gray)
-                }
-                .padding(.horizontal)
+                CalendarMonthView()
+                    .environmentObject(viewModel)
                 
-                Text("\(yearString(from: viewModel.selectedDate))년 \(monthString(from: viewModel.selectedDate))월")
-                    .font(.title2)
-                    .bold()
+                Spacer()
                 
-                Button(action: { changeMonth(by: 1) }) {
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(.gray)
+                Button {
+                    
+                } label: {
+                    HStack {
+                        Text("더 보기")
+                            .font(.system(size: 15))
+                            .foregroundStyle(.gray)
+                        
+                        Image(systemName: "chevron.right")
+                            .resizable()
+                            .frame(width: 7, height: 10)
+                            .foregroundColor(.gray)
+                    }
                 }
-                .padding(.horizontal)
             }
-            .padding(.bottom)
+            .padding()
             
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(Weekday.allCases, id: \.self) { weekday in
@@ -63,21 +67,15 @@ struct CalendarContentView: View {
 }
 
 extension CalendarContentView {
-    private func changeMonth(by value: Int) {
-        if let newDate = Calendar.current.date(byAdding: .month, value: value, to: viewModel.selectedDate) {
-            viewModel.setSelectedDate(newDate)
-        }
-    }
-    
     private func daysInMonth() -> [Date?] {
         let calendar = Calendar.current
         let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: viewModel.selectedDate))!
         let range = calendar.range(of: .day, in: .month, for: startOfMonth)!
-        
-        let firstWeekday = calendar.component(.weekday, from: startOfMonth) - 1
-        let startOffset = (firstWeekday + 6) % 7
-        
+                
+        let firstWeekday = calendar.component(.weekday, from: startOfMonth)
+        let startOffset = firstWeekday - 1
         var days: [Date?] = Array(repeating: nil, count: startOffset)
+        
         days.append(contentsOf: (1...range.count).compactMap { day in
             calendar.date(byAdding: .day, value: day - 1, to: startOfMonth)
         })
@@ -94,17 +92,30 @@ extension CalendarContentView {
         formatter.dateFormat = "d"
         return formatter.string(from: date)
     }
-    
-    private func monthString(from date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "M"
-        return formatter.string(from: date)
-    }
-    
-    private func yearString(from date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY"
-        return formatter.string(from: date)
-    }
 }
 
+#Preview {
+    let habit = Habit(
+        title: "운동하기",
+        checkDays: [
+            Calendar.current.date(byAdding: .day, value: -10, to: Date())!.startOfDay(), // 10일 전
+            Calendar.current.date(byAdding: .day, value: -7, to: Date())!.startOfDay(),  // 7일 전
+            Calendar.current.date(byAdding: .day, value: -5, to: Date())!.startOfDay(),  // 5일 전
+            Calendar.current.date(byAdding: .day, value: -3, to: Date())!.startOfDay(),  // 3일 전
+            Calendar.current.date(byAdding: .day, value: -1, to: Date())!.startOfDay(),  // 어제
+            Date().startOfDay(),                                                        // 오늘
+            Calendar.current.date(byAdding: .day, value: 1, to: Date())!.startOfDay(),   // 1일 후
+            Calendar.current.date(byAdding: .day, value: 2, to: Date())!.startOfDay(),   // 2일 후
+            Calendar.current.date(byAdding: .day, value: 5, to: Date())!.startOfDay(),   // 5일 후
+            Calendar.current.date(byAdding: .day, value: 10, to: Date())!.startOfDay()   // 10일 후
+        ]
+    )
+    
+    let viewModel = CalendarViewModel(
+        habit: habit,
+        filter: HabitCheckDaysFilter()
+    )
+    
+    CalendarContentView()
+        .environmentObject(viewModel)
+}

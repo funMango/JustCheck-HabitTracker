@@ -13,7 +13,7 @@ class TodayListViewModel: ObservableObject {
     private var habitManager: HabitManageInteractor
     private var weekdayManager: WeekdayManageInteractor
     private var habitFilter: HabitFilterInteractor
-    private var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()    
         
     init(habitManager: HabitManageInteractor, weekdayManager: WeekdayManageInteractor, habitFilter: HabitFilterInteractor) {
         self.habitManager = habitManager
@@ -22,13 +22,18 @@ class TodayListViewModel: ObservableObject {
         
         subscribeToUpdateSubject()
     }
-        
-    func fetchHabits(_ habits: [Habit]) {
-        let weekday = weekdayManager.getWeekday(from: Date())                        
-        self.habits = habitFilter.filter(habits: habits, weekday: weekday, date: Date())
+    
+    func updateWeekday() {
+        fetchHabits(self.habits)        
     }
         
-    private func subscribeToUpdateSubject() {
+    func fetchHabits(_ habits: [Habit]) {
+        let today = Date().startOfDay()
+        let weekday = weekdayManager.getWeekday(from: today)
+        self.habits = habitFilter.filter(habits: habits, weekday: weekday)
+    }
+        
+    private func subscribeToUpdateSubject() {                 
         habitManager.updateSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] habits in

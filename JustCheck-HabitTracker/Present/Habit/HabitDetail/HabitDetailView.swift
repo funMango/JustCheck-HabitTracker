@@ -38,7 +38,7 @@ struct HabitDetailView: View {
             
             VStack {
                 HStack {
-                    CaptionText(text: "선택 요일")
+                    CaptionText(text: String(localized: "selectedWeekdays"))
                                                             
                     Spacer()
                 }
@@ -62,9 +62,11 @@ struct HabitDetailView: View {
                 )
             }
             .padding(.horizontal)
-                                                                                                                                                                                            
+            .padding(.bottom, 30)
+                                                                            
             Spacer()
         }
+        .scrollIndicators(.hidden)
         .navigationBarTitle(String(localized: "habitDetail"), displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .toolbar() {

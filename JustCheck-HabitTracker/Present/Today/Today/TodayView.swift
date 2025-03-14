@@ -11,8 +11,7 @@ struct TodayView: View {
     @EnvironmentObject var vmContainer: VmContainer
     
     var body: some View {
-        VStack {
-            
+        VStack {            
             TodayTitleView(
                 viewModel: vmContainer.getTodayTitleViewModel()
             )

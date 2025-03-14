@@ -14,15 +14,21 @@ enum HabitType: Codable {
 }
 
 @Model
-class Habit: Identifiable {
+class Habit: Equatable, Identifiable {
     var id = UUID().uuidString
     var createdAt: Date = Date()
     var title: String = ""
     var weekDays: [Weekday] = []
     var checkDays: [Date] = []
-    var color: HabitColor = HabitColor.orange
     var memo: String = ""
     var type: HabitType = HabitType.normal
+    
+    private var colorRawValue: String = HabitColor.orange.rawValue
+    
+    var color: HabitColor {
+        get { HabitColor(rawValue: colorRawValue) ?? .orange }
+        set { colorRawValue = newValue.rawValue }
+    }
     
     init(title: String,
          weekDays: [Weekday] = [],
@@ -34,7 +40,7 @@ class Habit: Identifiable {
         self.title = title
         self.weekDays = weekDays
         self.checkDays = checkDays
-        self.color = color
+        self.colorRawValue = color.rawValue
         self.memo = memo
         self.type = type
     }
@@ -44,8 +50,8 @@ class Habit: Identifiable {
     }
     
     func getselectedWeekDays() -> [Bool] {
-        let allDays: [Weekday] = [.Mon, .Tue, .Wed, .Thu, .Fri, .Sat, .Sun]
-        return allDays.map { weekDays.contains($0) }        
+        let allDays: [Weekday] = [.Sun, .Mon, .Tue, .Wed, .Thu, .Fri, .Sat]
+        return allDays.map { weekDays.contains($0) }
     }
     
     @MainActor

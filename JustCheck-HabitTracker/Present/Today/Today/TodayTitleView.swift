@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TodayTitleView: View {
     @ObservedObject var viewModel: TodayTitleViewModel
+    @Environment(\.scenePhase) private var scenePhase
     
     var body: some View {
         HStack {
@@ -20,7 +21,12 @@ struct TodayTitleView: View {
         }
         .onAppear {
             viewModel.updateTitle()
-        }        
+        }
+        .onChange(of: scenePhase) { oldPhase, newPhase in
+            if newPhase == .active {
+                viewModel.updateTitle()
+            }
+        }
     }
 }
 

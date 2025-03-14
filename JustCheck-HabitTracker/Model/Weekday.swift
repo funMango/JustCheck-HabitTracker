@@ -10,16 +10,18 @@ import SwiftData
 
 
 enum Weekday: String, CaseIterable, Identifiable, Codable{
+    case Sun
     case Mon
     case Tue
     case Wed
     case Thu
     case Fri
     case Sat
-    case Sun
     
     var localized: String {
         switch self {
+        case .Sun:
+            return String(localized: "sun")
         case .Mon:
             return String(localized: "mon")
         case .Tue:
@@ -32,13 +34,13 @@ enum Weekday: String, CaseIterable, Identifiable, Codable{
             return String(localized: "fri")
         case .Sat:
             return String(localized: "sat")
-        case .Sun:
-            return String(localized: "sun")
         }        
     }
     
     var localizedFull: String {
         switch self {
+        case .Sun:
+            return String(localized: "Sun")
         case .Mon:
             return String(localized: "Mon")
         case .Tue:
@@ -50,9 +52,7 @@ enum Weekday: String, CaseIterable, Identifiable, Codable{
         case .Fri:
             return String(localized: "Fri")
         case .Sat:
-            return String(localized: "Sat")
-        case .Sun:
-            return String(localized: "Sun")
+            return String(localized: "Sat")        
         }
     }
         

@@ -333,6 +333,23 @@
         }
       }
     },
+    "selectedWeekdays" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected weekdays"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선택 요일"
+          }
+        }
+      }
+    },
     "setting" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -530,6 +547,23 @@
         }
       }
     },
+    "weekdays" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekdays"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "요일"
+          }
+        }
+      }
+    },
     "yellow" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -546,6 +580,9 @@
           }
         }
       }
+    },
+    "더 보기" : {
+
     },
     "새로운 습관" : {
       "extractionState" : "stale",

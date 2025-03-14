@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 enum HabitColor: String, CaseIterable, Identifiable, Codable {
     var id: String { self.rawValue }

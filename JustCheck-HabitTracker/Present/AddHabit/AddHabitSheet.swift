@@ -11,7 +11,9 @@ struct AddHabitSheet: View {
     @EnvironmentObject var vmContainer: VmContainer
     @Binding var showAddHabitSheet : Bool
     @FocusState var isFocused: Bool
+    private var downSmallPadding: CGFloat = 10
     private var downPadding: CGFloat = 15
+    private var downBigPadding: CGFloat = 30
     private var upPadding: CGFloat = 10
     
     init(showAddHabitSheet: Binding<Bool>) {
@@ -33,11 +35,16 @@ struct AddHabitSheet: View {
                     )
                     .padding(.top, upPadding)
                     .padding(.bottom, downPadding)
-                                                                                           
-                    WeekdaySelectionView(
-                        viewModel: vmContainer.getWeekdaySelectionViewModel()
-                    )
-                    .padding(.bottom, downPadding)
+                    
+                    VStack {
+                        CaptionText(text: String(localized: "weekdays"))
+                            .padding(.bottom, downSmallPadding)
+                        
+                        WeekdaySelectionView(
+                            viewModel: vmContainer.getWeekdaySelectionViewModel()
+                        )                        
+                    }
+                    .padding(.bottom, downBigPadding)
                                 
                     Divider()
                         .padding(.bottom, downPadding)

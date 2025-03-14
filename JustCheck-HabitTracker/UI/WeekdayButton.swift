@@ -14,6 +14,7 @@ struct WeekdayButton: View {
     var body: some View {
         Text(weekday)
             .frame(width: 40, height: 40)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(selectedDay ? .blackGray : Color.gray.opacity(0.3))
             .foregroundColor(selectedDay ? .white : Color.gray.opacity(0.3))
             .cornerRadius(8)

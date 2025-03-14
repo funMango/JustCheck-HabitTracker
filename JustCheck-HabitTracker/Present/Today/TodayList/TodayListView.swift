@@ -12,6 +12,8 @@ struct TodayListView: View {
     @EnvironmentObject var vmContainer: VmContainer
     @ObservedObject var viewModel: TodayListViewModel
     @Query var habits: [Habit]
+    @Environment(\.scenePhase) private var scenePhase
+    
     
     var body: some View {
         List {
@@ -21,12 +23,16 @@ struct TodayListView: View {
         }
         .environmentObject(vmContainer)
         .listStyle(.plain)
-        .onAppear() {
+        .onAppear() {            
             viewModel.fetchHabits(habits)
         }
         .onChange(of: habits) { oldHabits, newHabits in
-            print("habits 변동 감지")
             viewModel.fetchHabits(newHabits)
+        }
+        .onChange(of: scenePhase) { oldPhase, newPhase in            
+            if newPhase == .active {
+                viewModel.updateWeekday()
+            }
         }
         .animation(.easeInOut(duration: 0.5), value: viewModel.habits)
     }
@@ -46,14 +52,16 @@ struct TodayListCellView: View {
             Spacer()
             
             CircularCheckbox(
-                viewModel: vmContainer.getCheckboxViewModel(),
-                habit: habit
+                viewModel: vmContainer.getCheckboxViewModel(habit: habit)                
             )
         }
     }
 }
 #Preview {
     @Previewable @StateObject var vmContainer = VmContainer(modelContainer: DataContainer().getModelContainer())
+    
+    let viewModel = vmContainer.getTodayListViewModel()
+    
         
     TodayListView(viewModel: vmContainer.getTodayListViewModel())
         .environmentObject(vmContainer)
