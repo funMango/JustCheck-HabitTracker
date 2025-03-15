@@ -23,14 +23,9 @@ struct CalendarContentView: View {
                     
                 } label: {
                     HStack {
-                        Text("더 보기")
+                        Text(String(localized: "detail"))
                             .font(.system(size: 15))
                             .foregroundStyle(.gray)
-                        
-                        Image(systemName: "chevron.right")
-                            .resizable()
-                            .frame(width: 7, height: 10)
-                            .foregroundColor(.gray)
                     }
                 }
             }
@@ -52,9 +47,9 @@ struct CalendarContentView: View {
                 ForEach(allDays.indices, id: \.self) { index in
                     if let date = allDays[index] {
                         Text(dayString(from: date))
-                            .foregroundStyle(viewModel.habit.checkDays.contains(date.startOfDay()) ? Color.whiteBlack : Color.primary)
+                            .foregroundStyle(viewModel.habit.checkDays.contains(date.startOfDay()) ? .white : .primary)
                             .frame(width: 35, height: 35)
-                            .background(viewModel.habit.checkDays.contains(date.startOfDay()) ? Color.blackWhite : Color.clear)
+                            .background(viewModel.habit.checkDays.contains(date.startOfDay()) ? Color.blackGray : Color.clear)
                             .clipShape(Circle())
                     } else {
                         Text("")

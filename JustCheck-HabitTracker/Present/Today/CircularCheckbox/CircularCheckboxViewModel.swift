@@ -20,16 +20,17 @@ class CircularCheckboxViewModel: ObservableObject {
     }
             
     func check() {
-        Task {
-            if isChecked {
-                await addCheckDay(to: habit)
-            } else {
+        if isChecked {
+            Task {
                 await removeCheckDay(from: habit)
+                isChecked.toggle()
             }
-            await MainActor.run {
-                isChecked.toggle() // ✅ 비동기 작업이 끝난 후 실행
+        } else {
+            Task {
+                await addCheckDay(to: habit)
+                isChecked.toggle()
             }
-        }
+        }        
     }
     
     private func setIsChecked() {
@@ -48,4 +49,3 @@ class CircularCheckboxViewModel: ObservableObject {
         try? await habitManager.update(habit)
     }
 }
-

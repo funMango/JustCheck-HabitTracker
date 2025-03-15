@@ -61,6 +61,23 @@
         }
       }
     },
+    "detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detail"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "더 보기"
+          }
+        }
+      }
+    },
     "edit" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -580,9 +597,6 @@
           }
         }
       }
-    },
-    "더 보기" : {
-
     },
     "새로운 습관" : {
       "extractionState" : "stale",

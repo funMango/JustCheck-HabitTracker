@@ -14,7 +14,7 @@ struct CalendarMonthView: View {
         HStack {
             Button(action: { viewModel.changeMonth(by: -1) }) {
                 Image(systemName: "chevron.left")
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.blackWhite)
             }
                         
             Text("\(yearString(from: viewModel.selectedDate))년 \(monthString(from: viewModel.selectedDate))월")
@@ -23,7 +23,7 @@ struct CalendarMonthView: View {
             
             Button(action: { viewModel.changeMonth(by: 1) }) {
                 Image(systemName: "chevron.right")
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.blackWhite)
             }
         }        
     }

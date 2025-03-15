@@ -44,7 +44,9 @@ struct HabitDetailView: View {
                 }
                 .padding(.bottom, 10)
                                                 
-                HabitDetailWeekdaysView(selectedDays: habit.getselectedWeekDays())
+                HabitDetailWeekdaysView(
+                    selectedDays: habit.getselectedWeekDays()                    
+                )
             }
             .padding(.horizontal)
             
