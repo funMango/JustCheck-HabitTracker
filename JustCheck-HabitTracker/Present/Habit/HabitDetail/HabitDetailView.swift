@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct HabitDetailView: View {
-    var habit: Habit
+    @EnvironmentObject var vmContainer: VmContainer
     @Environment(\.dismiss) var dismiss
-        
+    private var habit: Habit
+    @State private var showEditHabitSheet = false
+    
+    init(habit: Habit) {
+        self.habit = habit
+    }
+            
     var body: some View {
         ScrollView {
             HStack {
@@ -68,13 +74,20 @@ struct HabitDetailView: View {
                                                                             
             Spacer()
         }
+        .sheet(isPresented: $showEditHabitSheet) {
+            AddHabitSheet(
+                showAddHabitSheet: $showEditHabitSheet,
+                viewModdel: vmContainer.getAddHabitSheetViewModel(habit: habit),
+                type: .edit
+            )
+        }
         .scrollIndicators(.hidden)
         .navigationBarTitle(String(localized: "habitDetail"), displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .toolbar() {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    
+                    showEditHabitSheet.toggle()
                 } label: {
                     Text(String(localized: "edit"))
                         .foregroundStyle(.red)
@@ -115,10 +128,14 @@ struct HabitDetailWeekdaysView: View {
 }
 
 #Preview {
+    @Previewable @StateObject var vmContainer = VmContainer(
+        modelContainer: DataContainer().getModelContainer()
+    )
     let habit = Habit(
         title: "Test",
         weekDays: [.Mon, .Wed]
     )
     
     HabitDetailView(habit: habit)
+        .environmentObject(vmContainer)
 }

@@ -15,10 +15,20 @@ protocol HabitInputProtocol: AnyObject {
 
 extension HabitInputProtocol {
     func reset(resetAll: @escaping () -> Void) {
-        manager.saveSubject
+        manager.resetSubject
             .receive(on: RunLoop.main)
             .sink { result in
+                print("▶️ reset 시작")
                 resetAll()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func habitInit(initialize: @escaping (_ habit: Habit) -> Void) {
+        manager.habitInitSubject
+            .receive(on: RunLoop.main)
+            .sink { habit in
+                initialize(habit)
             }
             .store(in: &cancellables)
     }

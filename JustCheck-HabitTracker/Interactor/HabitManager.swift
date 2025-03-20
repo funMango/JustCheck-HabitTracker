@@ -9,16 +9,20 @@ import Foundation
 import Combine
 
 protocol HabitManageInteractor {
-    var saveSubject: CurrentValueSubject<Bool, Never> { get }
+    var resetSubject: CurrentValueSubject<Bool, Never> { get }
     var updateSubject: PassthroughSubject<[Habit], Never> { get }
+    var habitInitSubject: PassthroughSubject<Habit, Never> { get }
     func save(_ habit: Habit) async throws
     func delete(_ habit: Habit) async throws
     func update(_ habit: Habit) async throws
+    func habitInit(_ habit: Habit)
+    func sheetReset()
 }
 
 class HabitManager: HabitManageInteractor {
-    var saveSubject = CurrentValueSubject<Bool, Never> (false)
+    var resetSubject = CurrentValueSubject<Bool, Never> (false)
     var updateSubject = PassthroughSubject<[Habit], Never> ()
+    var habitInitSubject = PassthroughSubject<Habit, Never> ()
     
     private var repository: HabitRepositoryProtocol
         
@@ -29,7 +33,6 @@ class HabitManager: HabitManageInteractor {
     func save(_ habit: Habit) async throws {        
         do {
             try await repository.save(habit)
-            saveSubject.send(true)
         } catch {
             throw error
         }
@@ -45,11 +48,19 @@ class HabitManager: HabitManageInteractor {
     
     func update(_ habit: Habit) async throws {
         do {
-            try await repository.save(habit)
+            try await repository.update(habit)
             let habits = try repository.fetch()
             updateSubject.send(habits)
         } catch {
             throw error
         }
+    }
+    
+    func habitInit(_ habit: Habit) {
+        habitInitSubject.send(habit)
+    }
+    
+    func sheetReset() {
+        resetSubject.send(true)
     }
 }

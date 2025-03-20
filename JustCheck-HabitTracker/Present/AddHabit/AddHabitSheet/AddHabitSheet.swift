@@ -7,17 +7,32 @@
 
 import SwiftUI
 
+enum AddHabitSheetType {
+    case add
+    case edit
+}
+
 struct AddHabitSheet: View {
     @EnvironmentObject var vmContainer: VmContainer
     @Binding var showAddHabitSheet : Bool
     @FocusState var isFocused: Bool
+    @ObservedObject var viewModel: AddHabitSheetViewModel
+    private var type: AddHabitSheetType
+    
     private var downSmallPadding: CGFloat = 10
     private var downPadding: CGFloat = 15
     private var downBigPadding: CGFloat = 30
     private var upPadding: CGFloat = 10
     
-    init(showAddHabitSheet: Binding<Bool>) {
+    init(showAddHabitSheet: Binding<Bool>,
+         viewModdel: AddHabitSheetViewModel,
+         type: AddHabitSheetType         
+    ) {
         self._showAddHabitSheet = showAddHabitSheet
+        self.viewModel = viewModdel
+        self.type = type
+        
+        viewModdel.habitInit()
     }
     
     var body: some View {
@@ -49,8 +64,10 @@ struct AddHabitSheet: View {
                     Divider()
                         .padding(.bottom, downPadding)
                                        
-                    ColorSelectionCellView(viewModel: vmContainer.getColorSelectioinViewModel())
-                        .padding(.bottom, downPadding)
+                    ColorSelectionCellView(
+                        viewModel: vmContainer.getColorSelectioinViewModel()
+                    )
+                    .padding(.bottom, downPadding)
                     
                     Divider()
                         
@@ -63,9 +80,17 @@ struct AddHabitSheet: View {
             .toolbar() {
                 ToolbarItem(placement: .topBarTrailing) {
                     HabitSaveButtonView(
-                        viewModel: vmContainer.getHabitSaveButtonViewModel(),
+                        viewModel: vmContainer.getHabitSaveButtonViewModel(
+                            type: type,
+                            oldHabit: viewModel.habit
+                        ),
                         showAddHabitSheet: $showAddHabitSheet
                     )
+                }
+            }
+            .onChange(of: showAddHabitSheet) { oldState, newState in
+                if newState == false {
+                    viewModel.sheetReset()
                 }
             }
         }
@@ -77,7 +102,12 @@ struct AddHabitSheet: View {
         modelContainer: DataContainer().getModelContainer()
     )
     @Previewable @State var isPresented = true
+    var viewModel = vmContainer.getAddHabitSheetViewModel(habit: Habit(title: "test"))
     
-    AddHabitSheet(showAddHabitSheet: $isPresented)
-        .environmentObject(vmContainer)
+    AddHabitSheet(
+        showAddHabitSheet: $isPresented,
+        viewModdel: viewModel,
+        type: .add
+    )
+    .environmentObject(vmContainer)
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HabitSaveButtonView: View {
     @ObservedObject var viewModel: HabitSaveButtonViewModel
-    @Binding var showAddHabitSheet: Bool
+    @Binding var showAddHabitSheet: Bool    
     
     var body: some View {
         Button {

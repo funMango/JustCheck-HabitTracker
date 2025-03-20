@@ -11,7 +11,7 @@ struct HabitColorCircle: View {
     var color: String
     private var size: CGFloat
     
-    init(color: String, size: CGFloat = 15) {
+    init(color: String, size: CGFloat = 10) {
         self.color = color
         self.size = size
     }

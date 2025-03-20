@@ -10,6 +10,7 @@ import Combine
 
 class WeekdaySelectionViewModel: ObservableObject, HabitInputProtocol {
     @Published var selectedWeekdays: [Weekday] = []
+    @Published var selectedDays: [Bool] = Array(repeating: false, count: 7)
     var manager: HabitManageInteractor
     var cancellables = Set<AnyCancellable>()
     private var weekdaysManager: WeekdaysManageInteractor
@@ -25,6 +26,7 @@ class WeekdaySelectionViewModel: ObservableObject, HabitInputProtocol {
                 
         checkWeekdayValidity()
         weekdaysReset()
+        weekdaysInit()
     }
     
     func updateWeekdays(from weekday: Weekday, status: Bool) {
@@ -38,6 +40,10 @@ class WeekdaySelectionViewModel: ObservableObject, HabitInputProtocol {
     func updateAllWeekdays(from isAllSelected: Bool) {
         self.selectedWeekdays = weekdaysManager.updateAllWeekDays(from: isAllSelected)
     }
+    
+    func updateSelectedDay(from index: Int) {
+        self.selectedDays[index].toggle()
+    }
             
     private func checkWeekdayValidity() {
         $selectedWeekdays
@@ -50,6 +56,13 @@ class WeekdaySelectionViewModel: ObservableObject, HabitInputProtocol {
     private func weekdaysReset() {
         reset {
             self.selectedWeekdays = []
+        }
+    }
+    
+    private func weekdaysInit() {
+        habitInit { habit in
+            self.selectedWeekdays = habit.weekDays
+            self.selectedDays = habit.getselectedWeekDays()
         }
     }
 }

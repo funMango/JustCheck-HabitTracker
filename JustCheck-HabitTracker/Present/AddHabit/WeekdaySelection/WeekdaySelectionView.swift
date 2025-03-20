@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct WeekdaySelectionView: View {
-    @ObservedObject var viewModel: WeekdaySelectionViewModel
-    @State private var selectedDays: [Bool] = Array(repeating: false, count: 7)
+    @ObservedObject var viewModel: WeekdaySelectionViewModel    
     @State private var isAllSelected: Bool = false
     private let weekdays = Weekday.allCases
     private let height: CGFloat = 40
@@ -27,7 +26,7 @@ struct WeekdaySelectionView: View {
                     get: { isAllSelected },
                     set: { newValue in
                         isAllSelected = newValue
-                        selectedDays = Array(repeating: newValue, count: 7)
+                        viewModel.selectedDays = Array(repeating: newValue, count: 7)
                         viewModel.updateAllWeekdays(from: newValue)
                     }
                 )) {
@@ -42,12 +41,12 @@ struct WeekdaySelectionView: View {
             HStack {
                 ForEach(0..<7, id: \.self) { index in
                     Button(action: {
-                        selectedDays[index].toggle()
+                        viewModel.updateSelectedDay(from: index)
                         updateAllSelectedStatus()
-                        viewModel.updateWeekdays(from: weekdays[index], status: selectedDays[index])
+                        viewModel.updateWeekdays(from: weekdays[index], status: viewModel.selectedDays[index])
                     }) {
                         WeekdayButton(
-                            selectedDay: $selectedDays[index],
+                            selectedDay: $viewModel.selectedDays[index],
                             weekday: weekdays[index].localized
                         )                        
                     }
@@ -58,7 +57,7 @@ struct WeekdaySelectionView: View {
     }
         
     private func updateAllSelectedStatus() {
-        isAllSelected = selectedDays.allSatisfy { $0 }
+        isAllSelected = viewModel.selectedDays.allSatisfy { $0 }
     }
 }
 

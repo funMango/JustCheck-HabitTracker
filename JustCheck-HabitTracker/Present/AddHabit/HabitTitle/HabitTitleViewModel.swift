@@ -22,6 +22,7 @@ class HabitTitleViewModel: ObservableObject, HabitInputProtocol {
         
         checkTitleValidity()
         titleReset()
+        titleInit()
     }
     
     private func checkTitleValidity() {
@@ -35,6 +36,12 @@ class HabitTitleViewModel: ObservableObject, HabitInputProtocol {
     private func titleReset() {
         reset {
             self.title = ""
+        }
+    }
+    
+    private func titleInit() {
+        habitInit { habit in
+            self.title = habit.title
         }
     }
 }

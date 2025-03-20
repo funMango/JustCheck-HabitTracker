@@ -38,8 +38,12 @@ struct HabitsView: View {
                 Spacer()
             }
             .sheet(isPresented: $showAddHabitSheet) {
-                AddHabitSheet(showAddHabitSheet: $showAddHabitSheet)
-            }
+                AddHabitSheet(
+                    showAddHabitSheet: $showAddHabitSheet,
+                    viewModdel: vmContainer.getAddHabitSheetViewModel(habit: nil),
+                    type: .add
+                )
+            }            
         }
         .environmentObject(vmContainer)
     }

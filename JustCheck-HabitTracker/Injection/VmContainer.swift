@@ -10,7 +10,6 @@ import SwiftData
 
 class VmContainer: ObservableObject {
     @Published private(set) var habitTitleViewModel: HabitTitleViewModel
-    @Published private(set) var habitSaveButtonViewModel: HabitSaveButtonViewModel
     @Published private(set) var weekdaySelectionViewModel: WeekdaySelectionViewModel
     @Published private(set) var colorSelectionViewModel: ColorSelectionViewModel
     @Published private(set) var habitListViewModel: HabitListViewModel
@@ -28,11 +27,6 @@ class VmContainer: ObservableObject {
         self.habitTitleViewModel = HabitTitleViewModel(
             validator: habitInputValidator,
             manager: habitManager
-        )
-        
-        self.habitSaveButtonViewModel = HabitSaveButtonViewModel(
-            validator: habitInputValidator,
-            habitManager: habitManager
         )
         
         self.weekdaySelectionViewModel = WeekdaySelectionViewModel(
@@ -65,8 +59,13 @@ class VmContainer: ObservableObject {
         return habitTitleViewModel
     }
     
-    func getHabitSaveButtonViewModel() -> HabitSaveButtonViewModel {
-        return habitSaveButtonViewModel
+    func getHabitSaveButtonViewModel(type: AddHabitSheetType, oldHabit: Habit? = nil) -> HabitSaveButtonViewModel {
+        return HabitSaveButtonViewModel(
+            validator: habitInputValidator,
+            habitManager: habitManager,
+            type: type,
+            oldHabit: oldHabit
+        )
     }
     
     func getWeekdaySelectionViewModel() -> WeekdaySelectionViewModel {
@@ -90,6 +89,16 @@ class VmContainer: ObservableObject {
     }
     
     func getCheckboxViewModel(habit: Habit) -> CircularCheckboxViewModel {
-        return CircularCheckboxViewModel(habitManager: self.habitManager, habit: habit)
+        return CircularCheckboxViewModel(
+            habitManager: self.habitManager,
+            habit: habit
+        )
+    }
+    
+    func getAddHabitSheetViewModel(habit: Habit?) -> AddHabitSheetViewModel {
+        return AddHabitSheetViewModel(
+            manager: habitManager,
+            habit: habit
+        )
     }
 }

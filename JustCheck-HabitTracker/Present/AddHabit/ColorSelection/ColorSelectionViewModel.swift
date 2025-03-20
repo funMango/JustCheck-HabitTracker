@@ -24,6 +24,7 @@ class ColorSelectionViewModel: ObservableObject, HabitInputProtocol {
         
         checkTitleValidity()
         colorReset()
+        colorInit()
     }
     
     func setSelectedColor(_ color: HabitColor) {
@@ -41,6 +42,12 @@ class ColorSelectionViewModel: ObservableObject, HabitInputProtocol {
     private func colorReset() {
         reset {
             self.selectedColor = .red
+        }
+    }
+    
+    private func colorInit() {
+        habitInit { habit in
+            self.selectedColor = habit.color
         }
     }
 }

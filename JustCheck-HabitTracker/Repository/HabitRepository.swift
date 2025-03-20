@@ -38,8 +38,19 @@ class HabitRepository: HabitRepositoryProtocol {
     
     func update(_ habit: Habit) async throws {
         do {
-            try await saveContext()
-            print("🔄 Habit 업데이트 완료")
+            if let existingHabit = try fetch().first(where: { $0.id == habit.id }) {
+                existingHabit.title = habit.title
+                existingHabit.weekDays = habit.weekDays
+                existingHabit.checkDays = habit.checkDays
+                existingHabit.color = habit.color
+                existingHabit.memo = habit.memo
+                existingHabit.type = habit.type
+                
+                try await saveContext()
+                print("🔄 Habit 업데이트 완료")
+            } else {
+                print("⚠️ [Error] Habit 업데이트 실패: 해당 Habit이 없습니다. (id: \(habit.id))")
+            }
         } catch {
             print("⚠️ [Error] Habit 업데이트 실패: \(error)")
             throw error
