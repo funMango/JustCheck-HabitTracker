@@ -7,30 +7,6 @@
 
 import SwiftUI
 
-class WeekdaySelectionViewModel2: ObservableObject {
-    @Published var weekdays: [DayOfWeek] = []
-    @Published var isAllSelected = false
-    private var manager: WeekdaySelectInteractor
-    
-    init(manager: WeekdaySelectInteractor) {
-        self.manager = manager
-        initialize()
-    }
-    
-    private func initialize() {
-        self.weekdays = manager.getSelectNone()
-    }
-    
-    func selectAll() {
-        self.isAllSelected.toggle()
-        self.weekdays = manager.getDayOfWeeksByStatus(isAllSelected)
-    }
-    
-    func checkWeekDays() {
-        self.isAllSelected = weekdays.allSatisfy(\.status)
-    }
-}
-
 struct WeekdaySelectionView2: View {
     @ObservedObject var viewModel: WeekdaySelectionViewModel2
     
@@ -39,8 +15,8 @@ struct WeekdaySelectionView2: View {
             WeekdaySelectAllButtonView()
                         
             WeekdaySelectButtonView()
-        }
-        .environmentObject(viewModel)
+        }        
+        .environmentObject(viewModel)        
     }
 }
 
@@ -56,11 +32,16 @@ struct WeekdaySelectAllButtonView: View {
             } label: {
                 HStack {
                     Text(String(localized: "selectAll"))
-                    Image(systemName: "checkmark.circle")
+                    
+                    if viewModel.isAllSelected {
+                        Image(systemName: "checkmark.circle")
+                    } else {
+                        Image(systemName: "circle")
+                    }
                 }
-                .foregroundStyle(viewModel.isAllSelected ? .blackWhite : .gray)
             }
         }
+        
     }
 }
 
@@ -69,16 +50,15 @@ struct WeekdaySelectButtonView: View {
     
     var body: some View {
         HStack {
-            ForEach($viewModel.weekdays, id: \.id) { $day in
+            ForEach(viewModel.weekdays, id: \.id) { day in
                 Button {
-                    day.status.toggle()
-                    viewModel.checkWeekDays()
+                    viewModel.toggleStatus(day)                    
                 } label: {
                     Text(day.weekday.localized)
-                        .foregroundStyle(day.status ? .whiteBlack : .gray)
+                        .foregroundStyle(day.status ? .white : .gray)
                         .frame(height: 44)
                         .frame(maxWidth: .infinity)
-                        .background(day.status ? .blackWhite : .lightSiver)
+                        .background(day.status ? .blackGray : .lightSiverGray)
                         .cornerRadius(8)
                 }
             }
@@ -87,6 +67,10 @@ struct WeekdaySelectButtonView: View {
 }
 
 #Preview {
-    var manager = WeekdaySelectManager()
-    WeekdaySelectionView2(viewModel:  WeekdaySelectionViewModel2(manager: manager))
+    let dataContainer = DataContainer()
+    let vmContainer = VmContainer(modelContainer: dataContainer.getModelContainer())
+    
+    WeekdaySelectionView2(
+        viewModel:  vmContainer.getWeekdaySelectionViewModel2()
+    )
 }

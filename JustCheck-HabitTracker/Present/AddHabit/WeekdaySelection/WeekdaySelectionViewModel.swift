@@ -60,7 +60,7 @@ class WeekdaySelectionViewModel: ObservableObject, HabitInputProtocol {
     }
     
     private func weekdaysInit() {
-        habitInit { habit in
+        editInit { habit in
             self.selectedWeekdays = habit.weekDays
             self.selectedDays = habit.getselectedWeekDays()
         }

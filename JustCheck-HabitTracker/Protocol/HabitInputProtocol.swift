@@ -24,8 +24,8 @@ extension HabitInputProtocol {
             .store(in: &cancellables)
     }
     
-    func habitInit(initialize: @escaping (_ habit: Habit) -> Void) {
-        manager.habitInitSubject
+    func editInit(initialize: @escaping (_ habit: Habit) -> Void) {
+        manager.editSubject
             .receive(on: RunLoop.main)
             .sink { habit in
                 initialize(habit)

@@ -43,10 +43,10 @@ struct AddHabitSheet: View {
                     set: { isFocused = $0 }
                 ))
                 
-                VStack{                                       
+                VStack{
                     HabitTitleView(
                         viewModel: vmContainer.getHabitTitleViewModel(),
-                        isFocused: $isFocused                        
+                        isFocused: $isFocused
                     )
                     .padding(.top, upPadding)
                     .padding(.bottom, downPadding)
@@ -55,23 +55,25 @@ struct AddHabitSheet: View {
                         CaptionText(text: String(localized: "weekdays"))
                             .padding(.bottom, downSmallPadding)
                         
-                        WeekdaySelectionView(
-                            viewModel: vmContainer.getWeekdaySelectionViewModel()
-                        )                        
+                        WeekdaySelectionView2(
+                            viewModel: vmContainer.getWeekdaySelectionViewModel2(
+                                editWeekdays: viewModel.habit?.getCopyDayOfWeeks() ?? []
+                            )
+                        )
                     }
                     .padding(.bottom, downBigPadding)
-                                
+                    
                     Divider()
                         .padding(.bottom, downPadding)
-                                       
+                    
                     ColorSelectionCellView(
                         viewModel: vmContainer.getColorSelectioinViewModel()
                     )
                     .padding(.bottom, downPadding)
                     
                     Divider()
-                        
-                    Spacer()                                                    
+                    
+                    Spacer()
                 }
             }
             .navigationTitle(String(localized: "newHabit"))
@@ -88,8 +90,8 @@ struct AddHabitSheet: View {
                     )
                 }
             }
-            .onChange(of: showAddHabitSheet) { oldState, newState in
-                if newState == false {
+            .onChange(of: showAddHabitSheet) { oldValue, newValue in
+                if !newValue {
                     viewModel.sheetReset()
                 }
             }

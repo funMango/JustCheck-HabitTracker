@@ -28,6 +28,7 @@ class HabitRepository: HabitRepositoryProtocol {
     
     func save(_ habit: Habit) async throws {
         modelContext.insert(habit)
+        print(habit.printSummary())
         try await saveContext()
     }
     
@@ -41,6 +42,7 @@ class HabitRepository: HabitRepositoryProtocol {
             if let existingHabit = try fetch().first(where: { $0.id == habit.id }) {
                 existingHabit.title = habit.title
                 existingHabit.weekDays = habit.weekDays
+                existingHabit.dayOfWeeks = habit.dayOfWeeks
                 existingHabit.checkDays = habit.checkDays
                 existingHabit.color = habit.color
                 existingHabit.memo = habit.memo

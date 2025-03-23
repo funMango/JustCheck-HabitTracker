@@ -18,7 +18,7 @@ class AddHabitSheetViewModel: ObservableObject {
     
     func habitInit() {
         if let habit = self.habit {
-            manager.habitInit(habit)
+            manager.editInit(habit)
         }
     }
     

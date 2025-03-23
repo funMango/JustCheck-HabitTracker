@@ -6,19 +6,34 @@
 //
 
 import Foundation
+import SwiftData
 
-class DayOfWeek: Hashable, Equatable {
+class DayOfWeek: Hashable, Equatable,Identifiable, Codable {
     var id = UUID().uuidString
     var weekday: Weekday
     var status: Bool
     
-    init(weekday: Weekday, status: Bool) {
+    init(
+        id: String = UUID().uuidString,
+        weekday: Weekday,
+        status: Bool
+    ) {
+        self.id = id
         self.weekday = weekday
         self.status = status
     }
     
     func toggleStatus() {
         self.status.toggle()
+    }
+    
+    func copy() -> DayOfWeek {
+        let newDay = DayOfWeek(
+            id: self.id,
+            weekday: self.weekday,
+            status: self.status
+        )        
+        return newDay
     }
     
     static func == (lhs: DayOfWeek, rhs: DayOfWeek) -> Bool {

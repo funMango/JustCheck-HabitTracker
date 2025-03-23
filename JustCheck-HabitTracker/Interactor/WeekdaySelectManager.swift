@@ -10,6 +10,7 @@ import Foundation
 protocol WeekdaySelectInteractor {
     func getDayOfWeeksByStatus(_ status: Bool) -> [DayOfWeek]
     func getSelectNone() -> [DayOfWeek]
+    func toggleStatus(weekdays: [DayOfWeek], targetDay: DayOfWeek) -> [DayOfWeek]
 }
 
 class WeekdaySelectManager: WeekdaySelectInteractor {
@@ -42,5 +43,17 @@ class WeekdaySelectManager: WeekdaySelectInteractor {
             DayOfWeek(weekday: .Fri, status: true),
             DayOfWeek(weekday: .Sat, status: true),
         ]
+    }
+    
+    func toggleStatus(weekdays: [DayOfWeek], targetDay: DayOfWeek) -> [DayOfWeek] {       
+        return weekdays.map { day in
+            if day.weekday == targetDay.weekday {
+                var toggledDay = day
+                toggledDay.status.toggle()
+                return toggledDay
+            } else {
+                return day
+            }
+        }
     }
 }
