@@ -59,12 +59,11 @@ class VmContainer: ObservableObject {
         return habitTitleViewModel
     }
     
-    func getHabitSaveButtonViewModel(type: AddHabitSheetType, oldHabit: Habit? = nil) -> HabitSaveButtonViewModel {
+    func getHabitSaveButtonViewModel(type: AddHabitSheetType) -> HabitSaveButtonViewModel {
         return HabitSaveButtonViewModel(
             validator: habitInputValidator,
             habitManager: habitManager,
-            type: type,
-            oldHabit: oldHabit
+            type: type
         )
     }
     

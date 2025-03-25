@@ -83,8 +83,7 @@ struct AddHabitSheet: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     HabitSaveButtonView(
                         viewModel: vmContainer.getHabitSaveButtonViewModel(
-                            type: type,
-                            oldHabit: viewModel.habit
+                            type: type                        
                         ),
                         showAddHabitSheet: $showAddHabitSheet
                     )

@@ -11,7 +11,7 @@ import Combine
 protocol HabitManageInteractor {
     var resetSubject: PassthroughSubject<Bool, Never> { get }
     var updateSubject: PassthroughSubject<[Habit], Never> { get }
-    var editSubject: PassthroughSubject<Habit, Never> { get }
+    var editSubject: CurrentValueSubject<Habit?, Never> { get }
     
     func save(_ habit: Habit) async throws
     func delete(_ habit: Habit) async throws
@@ -23,7 +23,7 @@ protocol HabitManageInteractor {
 class HabitManager: HabitManageInteractor {
     var resetSubject = PassthroughSubject<Bool, Never> ()
     var updateSubject = PassthroughSubject<[Habit], Never> ()
-    var editSubject = PassthroughSubject<Habit, Never> ()
+    var editSubject = CurrentValueSubject<Habit?, Never> (nil)
     
     private var repository: HabitRepositoryProtocol
         

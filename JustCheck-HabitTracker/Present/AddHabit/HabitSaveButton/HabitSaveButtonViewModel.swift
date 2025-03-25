@@ -8,25 +8,26 @@
 import SwiftUI
 import Combine
 
-class HabitSaveButtonViewModel: ObservableObject {
+class HabitSaveButtonViewModel: ObservableObject, HabitInputProtocol {
     @Published var canSave = false
+    var manager: HabitManageInteractor
+    var cancellables = Set<AnyCancellable>()
+    
     private var validator: HabitInputValidInteractor
-    private var habitManager: HabitManageInteractor
-    private var cancellables = Set<AnyCancellable>()
     private var habit: Habit?
-    private var oldHabit: Habit?
+    private var habitId: String?
     private var type: AddHabitSheetType
     
     init(validator: HabitInputValidInteractor,
          habitManager: HabitManageInteractor,
-         type: AddHabitSheetType,
-         oldHabit: Habit? = nil
+         type: AddHabitSheetType
     ) {
         self.validator = validator
-        self.habitManager = habitManager
+        self.manager = habitManager
         self.type = type
-        self.oldHabit = oldHabit
+        
         observeEvent()
+        getHabitId()
     }
     
     func saveHabit() async -> Result<Void, Error> {
@@ -34,13 +35,13 @@ class HabitSaveButtonViewModel: ObservableObject {
             if let habit = habit {
                 switch self.type {
                 case .add:
-                    try await habitManager.save(habit)
+                    try await manager.save(habit)
                 case .edit:
-                    if let oldHabit = oldHabit {
-                        habit.id = oldHabit.id
-                        try await habitManager.update(habit)
+                    if let habitId = habitId {
+                        habit.setId(habitId)
+                        try await manager.update(habit)
                     }
-                }                
+                }
                 return Result.success(())
             }
             return .failure(NSError(domain: "HabitError", code: 1, userInfo: nil))
@@ -59,5 +60,11 @@ class HabitSaveButtonViewModel: ObservableObject {
                 self?.habit = habit
             }
             .store(in: &cancellables)
+    }
+    
+    private func getHabitId() {
+        editInit { habit in
+            self.habitId = habit.id
+        }
     }
 }

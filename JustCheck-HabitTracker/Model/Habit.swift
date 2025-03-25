@@ -52,6 +52,10 @@ class Habit: Equatable, Identifiable {
         self.type = type
     }
     
+    func setId(_ id: String) {
+        self.id = id
+    }
+    
     func addCheckDay(_ date: Date) {
         self.checkDays.append(date.startOfDay())
     }

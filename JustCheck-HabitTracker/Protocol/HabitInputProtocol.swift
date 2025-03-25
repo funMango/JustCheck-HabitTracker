@@ -28,7 +28,9 @@ extension HabitInputProtocol {
         manager.editSubject
             .receive(on: RunLoop.main)
             .sink { habit in
-                initialize(habit)
+                if let habit = habit {
+                    initialize(habit)
+                }
             }
             .store(in: &cancellables)
     }
