@@ -46,7 +46,7 @@ class ColorSelectionViewModel: ObservableObject, HabitInputProtocol {
     }
     
     private func colorInit() {
-        editInit { habit in
+        edit { habit in
             self.selectedColor = habit.color
         }
     }

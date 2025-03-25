@@ -63,7 +63,7 @@ class HabitSaveButtonViewModel: ObservableObject, HabitInputProtocol {
     }
     
     private func getHabitId() {
-        editInit { habit in
+        edit { habit in
             self.habitId = habit.id
         }
     }

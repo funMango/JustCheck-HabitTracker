@@ -40,7 +40,7 @@ class HabitTitleViewModel: ObservableObject, HabitInputProtocol {
     }
     
     private func titleInit() {
-        editInit { habit in
+        edit { habit in
             self.title = habit.title
         }
     }

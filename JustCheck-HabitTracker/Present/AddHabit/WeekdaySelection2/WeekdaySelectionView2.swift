@@ -71,6 +71,6 @@ struct WeekdaySelectButtonView: View {
     let vmContainer = VmContainer(modelContainer: dataContainer.getModelContainer())
     
     WeekdaySelectionView2(
-        viewModel:  vmContainer.getWeekdaySelectionViewModel2()
+        viewModel:  vmContainer.getWeekdaySelectionViewModel2(type: .add)
     )
 }

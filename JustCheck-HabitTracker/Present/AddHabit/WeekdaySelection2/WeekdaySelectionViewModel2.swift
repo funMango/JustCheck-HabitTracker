@@ -15,23 +15,23 @@ class WeekdaySelectionViewModel2: ObservableObject, HabitInputProtocol {
     var manager: HabitManageInteractor
     var cancellables = Set<AnyCancellable>()
     private var selectManager: WeekdaySelectInteractor
-    
     private var validator: HabitInputValidInteractor
-    private var editWeekdays: [DayOfWeek] = []
+    private var type: AddHabitSheetType
         
     init(
         selectManager: WeekdaySelectInteractor,
         manager: HabitManageInteractor,
         validator: HabitInputValidInteractor,
-        editWeekdays: [DayOfWeek] = []
+        type: AddHabitSheetType
     ) {
         self.selectManager = selectManager
         self.manager = manager
         self.validator = validator
-        self.editWeekdays = editWeekdays
+        self.type = type
         
+        setWeekdays()
         weekDayReset()
-        setWeekdays()        
+        weekDayInit()
     }
     
     func selectAll() {
@@ -47,10 +47,9 @@ class WeekdaySelectionViewModel2: ObservableObject, HabitInputProtocol {
     
             
     func setWeekdays() {
-        if editWeekdays.isEmpty {
+        if type == .add {
             self.weekdays = selectManager.getSelectNone()
-        } else {
-            checkWeekDays(editWeekdays)
+            checkWeekDays(self.weekdays)
         }
     }
     
@@ -61,8 +60,20 @@ class WeekdaySelectionViewModel2: ObservableObject, HabitInputProtocol {
     }
     
     private func weekDayReset() {
-        reset {
+        reset { [weak self] in
+            guard let self = self else { return }            
             self.weekdays = []
+            self.weekdays = self.selectManager.getSelectNone()
+        }
+    }
+    
+    private func weekDayInit() {
+        guard type == .edit else { return }
+        edit { [weak self] habit in
+            guard let self = self else { return }
+            self.weekdays = []
+            self.weekdays = habit.dayOfWeeks
+            checkWeekDays(self.weekdays)
         }
     }
 }

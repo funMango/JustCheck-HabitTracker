@@ -101,12 +101,12 @@ class VmContainer: ObservableObject {
         )
     }
     
-    func getWeekdaySelectionViewModel2(editWeekdays: [DayOfWeek] = []) -> WeekdaySelectionViewModel2 {
+    func getWeekdaySelectionViewModel2(type: AddHabitSheetType) -> WeekdaySelectionViewModel2 {
         return WeekdaySelectionViewModel2(
             selectManager: WeekdaySelectManager(),
             manager: habitManager,
-            validator: habitInputValidator,            
-            editWeekdays: editWeekdays
+            validator: habitInputValidator,
+            type: type
         )
     }
 }

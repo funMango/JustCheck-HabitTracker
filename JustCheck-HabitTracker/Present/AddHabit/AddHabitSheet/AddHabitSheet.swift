@@ -56,9 +56,7 @@ struct AddHabitSheet: View {
                             .padding(.bottom, downSmallPadding)
                         
                         WeekdaySelectionView2(
-                            viewModel: vmContainer.getWeekdaySelectionViewModel2(
-                                editWeekdays: viewModel.habit?.getCopyDayOfWeeks() ?? []
-                            )
+                            viewModel: vmContainer.getWeekdaySelectionViewModel2(type: type)
                         )
                     }
                     .padding(.bottom, downBigPadding)
@@ -83,7 +81,7 @@ struct AddHabitSheet: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     HabitSaveButtonView(
                         viewModel: vmContainer.getHabitSaveButtonViewModel(
-                            type: type                        
+                            type: type
                         ),
                         showAddHabitSheet: $showAddHabitSheet
                     )
